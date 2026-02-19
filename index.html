@@ -1,1383 +1,1075 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Presentasi Hasil Penelitian - Benyamin Batau 2026</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDX Alpha Hunter — Pak Benyamin × Stockbit</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #020508;
+  --s1: #060d15;
+  --s2: #0a1520;
+  --border: #0f2035;
+  --border2: #1a3050;
+  --accent: #00d4ff;
+  --accent2: #0099cc;
+  --gold: #ffc107;
+  --green: #00e676;
+  --green2: #00c853;
+  --red: #ff1744;
+  --orange: #ff6d00;
+  --purple: #7c4dff;
+  --text: #b8cfe0;
+  --text2: #7a9ab8;
+  --mono: 'JetBrains Mono', monospace;
+  --head: 'Barlow Condensed', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--mono);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
 
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      min-height:100vh;
-      background: linear-gradient(135deg, #0a1929, #1a237e, #283593);
-      color: #e3f2fd;
-      overflow-x: hidden;
-    }
-    .container { display:flex; min-height:100vh; }
-    .sidebar {
-      width:320px;
-      background:rgba(13,27,42,0.95);
-      padding:35px 25px;
-      border-right:2px solid rgba(100,181,246,0.3);
-      flex-shrink:0;
-      box-shadow: 4px 0 20px rgba(0,0,0,0.4);
-    }
-    .logo {
-      text-align: center;
-      margin-bottom: 30px;
-      padding-bottom: 20px;
-      border-bottom: 2px solid rgba(100,181,246,0.3);
-    }
-    .logo h3 {
-      font-size: 1.8rem;
-      color: #64b5f6;
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-    .logo p {
-      color: #90caf9;
-      font-size: 1rem;
-    }
-    .sidebar-content p {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      margin-bottom: 12px;
-      color: #b3e5fc;
-    }
-    .sidebar-content p strong {
-      color: #64b5f6;
-      font-weight: 600;
-    }
-    .demo-link {
-      display: block;
-      margin: 35px auto 0;
-      padding: 18px 24px;
-      background: linear-gradient(135deg, #4caf50, #66bb6a);
-      color: white;
-      text-align: center;
-      border-radius: 14px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.05rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(76,175,80,0.4);
-    }
-    .demo-link:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 10px 30px rgba(76,175,80,0.6);
-    }
-    .slide-container {
-      flex:1;
-      padding:45px 55px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position: relative;
-    }
-    .slide { 
-      width:100%; 
-      max-width:1400px; 
-      display:none;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-    .slide.active { display:block; }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+/* Animated radar sweep background */
+.radar-bg{
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,212,255,0.04) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0,212,255,0.02) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0,212,255,0.02) 40px);
+  pointer-events:none;z-index:0;
+}
 
-    h2 { 
-      font-size: 2.8rem; 
-      color: #64b5f6; 
-      margin-bottom: 1.5rem; 
-      text-align: center;
-      font-weight: 700;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-    h3 { 
-      font-size: 2rem; 
-      color: #90caf9; 
-      margin: 1.8rem 0 1.2rem;
-      font-weight: 600;
-    }
-    p, li { 
-      font-size: 1.2rem; 
-      line-height: 1.75; 
-      margin-bottom: 1.1rem;
-      color: #e3f2fd;
-    }
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px 60px;position:relative;z-index:1;}
 
-    .highlight {
-      background: linear-gradient(135deg, rgba(33,150,243,0.15), rgba(33,150,243,0.25));
-      padding: 25px 30px;
-      border-radius: 16px;
-      border-left: 8px solid #2196f3;
-      margin: 28px 0;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-    }
+/* ═══════════ HEADER ═══════════ */
+.hdr{
+  background:var(--s1);
+  border:1px solid var(--border2);
+  border-top:3px solid var(--accent);
+  padding:24px 28px;
+  margin-bottom:16px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:20px;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+.hdr::after{
+  content:'ALPHA';
+  position:absolute;right:-15px;top:-15px;
+  font-family:var(--head);font-size:110px;font-weight:900;
+  color:rgba(0,212,255,0.03);pointer-events:none;line-height:1;
+}
+.hdr-tag{font-size:9px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.hdr h1{font-family:var(--head);font-size:2rem;font-weight:900;color:#fff;line-height:1.1;}
+.hdr h1 b{color:var(--gold);}
+.hdr-sub{font-size:10px;color:var(--text2);line-height:1.8;margin-top:6px;max-width:550px;}
+.src-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+.pill{font-size:8px;padding:3px 9px;border:1px solid;letter-spacing:1px;text-transform:uppercase;cursor:default;}
+.pill.y{border-color:#6200ea;color:#b388ff;background:rgba(98,0,234,0.1);}
+.pill.s{border-color:#00838f;color:#00e5ff;background:rgba(0,131,143,0.1);}
+.pill.i{border-color:#e65100;color:#ffab40;background:rgba(230,81,0,0.1);}
+.pill.b{border-color:#1565c0;color:#82b1ff;background:rgba(21,101,192,0.1);}
+.pill.f{border-color:#2e7d32;color:#69f0ae;background:rgba(46,125,50,0.1);}
+.pill.g{border-color:#b71c1c;color:#ff8a80;background:rgba(183,28,28,0.1);}
 
-    .chart-container {
-      height: 480px;
-      background: rgba(13,27,42,0.7);
-      padding: 20px;
-      border-radius: 16px;
-      margin: 32px 0;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      border: 1px solid rgba(100,181,246,0.2);
-    }
+.clock-box{text-align:right;}
+.clock-time{font-family:var(--head);font-size:2rem;font-weight:900;color:var(--accent);display:block;}
+.clock-date{font-size:9px;color:var(--text2);margin-top:2px;}
+.mkt-badge{
+  display:inline-block;font-size:9px;padding:4px 12px;margin-top:6px;
+  font-weight:700;letter-spacing:2px;text-transform:uppercase;
+}
+.mkt-badge.open{background:rgba(0,230,118,0.15);color:var(--green);border:1px solid var(--green);}
+.mkt-badge.closed{background:rgba(255,23,68,0.1);color:var(--red);border:1px solid rgba(255,23,68,0.4);}
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin: 30px 0;
-    }
+/* ═══════════ CONTROLS ═══════════ */
+.ctrl{background:var(--s1);border:1px solid var(--border2);padding:20px;margin-bottom:12px;}
+.ctrl-hdr{font-size:9px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.pre{
+  font-family:var(--mono);font-size:9px;padding:6px 14px;
+  border:1px solid var(--border2);background:transparent;color:var(--text2);
+  cursor:pointer;transition:all 0.15s;letter-spacing:1px;text-transform:uppercase;
+}
+.pre:hover,.pre.on{border-color:var(--gold);color:var(--gold);background:rgba(255,193,7,0.07);}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px;}
+.fl label{display:block;font-size:8px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;}
+.fl input,.fl select{
+  width:100%;background:var(--bg);border:1px solid var(--border2);color:var(--text);
+  padding:9px 11px;font-family:var(--mono);font-size:11px;outline:none;transition:border-color 0.2s;
+}
+.fl input:focus,.fl select:focus{border-color:var(--accent);}
+.fl select option{background:var(--s2);}
+.fc{grid-column:1/-1;}
 
-    .stat-card {
-      background: linear-gradient(135deg, rgba(33,150,243,0.2), rgba(33,150,243,0.1));
-      padding: 25px;
-      border-radius: 14px;
-      text-align: center;
-      border: 2px solid rgba(100,181,246,0.3);
-      transition: all 0.3s ease;
-    }
+.btn-go{
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#000;border:none;
+  font-family:var(--head);font-size:16px;font-weight:900;
+  letter-spacing:4px;text-transform:uppercase;cursor:pointer;
+  transition:all 0.2s;position:relative;
+}
+.btn-go:hover:not(:disabled){filter:brightness(1.15);box-shadow:0 0 40px rgba(0,212,255,0.35);transform:translateY(-1px);}
+.btn-go:disabled{opacity:0.35;cursor:not-allowed;transform:none;}
 
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(33,150,243,0.4);
-      border-color: #64b5f6;
-    }
+/* ═══════════ PROGRESS ═══════════ */
+.prog{display:none;background:var(--s1);border:1px solid var(--border2);padding:18px;margin-bottom:14px;}
+.prog.show{display:block;}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.prog-title{font-size:9px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;}
+.prog-pct{font-family:var(--head);font-size:1.4rem;font-weight:900;color:var(--gold);}
+.prog-track{height:6px;background:var(--border2);margin-bottom:10px;position:relative;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));width:0%;transition:width 0.3s ease;position:relative;}
+.prog-fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:20px;background:rgba(255,255,255,0.3);filter:blur(4px);}
+.prog-log{font-size:9px;line-height:2;max-height:80px;overflow:hidden;}
+.lg{color:var(--text2);}
+.lg.ok{color:var(--green);}
+.lg.er{color:var(--red);}
+.lg.in{color:var(--gold);}
+.lg.sk{color:var(--text2);opacity:0.6;}
 
-    .stat-value {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #4caf50;
-      margin: 10px 0;
-    }
+/* ═══════════ SUMMARY ═══════════ */
+.sum{display:none;gap:1px;background:var(--border);border:1px solid var(--border2);margin-bottom:14px;}
+.sum.show{display:grid;grid-template-columns:repeat(7,1fr);}
+.si{background:var(--s1);padding:13px 10px;text-align:center;}
+.si .v{font-family:var(--head);font-size:1.5rem;font-weight:900;display:block;color:var(--accent);}
+.si .v.g{color:var(--green);}
+.si .v.r{color:var(--red);}
+.si .v.y{color:var(--gold);}
+.si .v.p{color:var(--purple);}
+.si .l{font-size:7px;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;display:block;}
 
-    .stat-label {
-      font-size: 1.1rem;
-      color: #90caf9;
-      font-weight: 500;
-    }
+/* ═══════════ TOOLBAR ═══════════ */
+.tb{display:none;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.tb.show{display:flex;}
+.tb-l{display:flex;gap:5px;align-items:center;font-size:8px;color:var(--text2);flex-wrap:wrap;}
+.tbtn{
+  font-family:var(--mono);font-size:8px;padding:5px 11px;
+  background:transparent;border:1px solid var(--border2);color:var(--text2);
+  cursor:pointer;transition:all 0.15s;letter-spacing:1px;text-transform:uppercase;
+}
+.tbtn:hover,.tbtn.on{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,0.05);}
+.tb-r input{
+  background:var(--s1);border:1px solid var(--border2);color:var(--text);
+  padding:6px 12px;font-family:var(--mono);font-size:10px;outline:none;width:180px;
+}
+.tb-r input:focus{border-color:var(--accent);}
 
-    .comparison-box {
-      display: flex;
-      justify-content: space-around;
-      margin: 30px 0;
-      gap: 20px;
-    }
+/* ═══════════ CARDS ═══════════ */
+.card{
+  background:var(--s1);
+  border:1px solid var(--border2);
+  border-left:5px solid var(--border2);
+  margin-bottom:8px;
+  padding:14px 18px;
+  display:grid;
+  grid-template-columns:36px 170px 1fr 130px 110px;
+  gap:12px;
+  align-items:center;
+  animation:fadeUp 0.35s ease both;
+  transition:all 0.15s;
+  position:relative;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card:hover{background:var(--s2);border-color:rgba(0,212,255,0.25);transform:translateX(3px);}
+.card.up{border-left-color:var(--green);}
+.card.side{border-left-color:var(--gold);}
+.card.down{border-left-color:var(--red);}
 
-    .comparison-item {
-      flex: 1;
-      background: rgba(13,27,42,0.6);
-      padding: 25px;
-      border-radius: 14px;
-      text-align: center;
-      border: 2px solid rgba(100,181,246,0.3);
-    }
+/* Profit tier glow */
+.card.tier-s{box-shadow:0 0 15px rgba(0,230,118,0.12);}
+.card.tier-a{box-shadow:0 0 10px rgba(255,193,7,0.08);}
 
-    .comparison-item.eksperimen {
-      border-color: #4caf50;
-    }
+/* Profit tier badge */
+.tier-flag{
+  position:absolute;top:0;right:0;
+  font-family:var(--head);font-size:9px;font-weight:900;
+  padding:3px 10px;letter-spacing:2px;
+}
+.tier-flag.S{background:var(--green);color:#000;}
+.tier-flag.A{background:var(--gold);color:#000;}
+.tier-flag.B{background:rgba(0,212,255,0.2);color:var(--accent);}
+.tier-flag.C{background:rgba(255,255,255,0.05);color:var(--text2);}
 
-    .comparison-item.kontrol {
-      border-color: #2196f3;
-    }
+/* Column: Rank */
+.c-rank{font-size:11px;color:var(--text2);text-align:center;}
+.c-rank span{display:block;font-family:var(--head);font-size:1.1rem;font-weight:900;color:var(--text);}
 
-    .nav {
-      position: fixed;
-      bottom: 28px;
-      left: 28px;
-      display: flex;
-      gap: 20px;
-      z-index: 999;
-    }
-    .nav button {
-      padding: 16px 35px;
-      font-size: 1.2rem;
-      background: linear-gradient(135deg, #2196f3, #64b5f6);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(33,150,243,0.4);
-      font-weight: 600;
-    }
-    .nav button:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 10px 30px rgba(33,150,243,0.6);
-    }
-    .nav button:active { 
-      transform: translateY(1px); 
-    }
+/* Column: Info */
+.c-info .ticker{font-family:var(--head);font-size:1.3rem;font-weight:900;color:#fff;letter-spacing:1px;}
+.c-info .name{font-size:9px;color:var(--text2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;}
+.c-info .sector{font-size:7px;padding:2px 6px;border:1px solid var(--border2);color:var(--text2);margin-top:5px;display:inline-block;letter-spacing:1px;text-transform:uppercase;}
+.c-info .stockbit-link{
+  display:inline-flex;align-items:center;gap:4px;
+  margin-top:6px;font-size:8px;padding:4px 10px;
+  background:linear-gradient(135deg,#0052cc,#0066ff);
+  color:#fff;text-decoration:none;letter-spacing:1px;text-transform:uppercase;
+  transition:all 0.15s;
+}
+.c-info .stockbit-link:hover{filter:brightness(1.2);transform:scale(1.03);}
 
-    .slide-counter {
-      position: fixed;
-      top: 20px;
-      right: 30px;
-      background: rgba(13,27,42,0.9);
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-size: 1.1rem;
-      color: #64b5f6;
-      border: 2px solid rgba(100,181,246,0.3);
-      z-index: 999;
-      font-weight: 600;
-    }
+/* Column: Indicators */
+.c-ind{}
+.sigs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
+.sig{font-size:7px;padding:2px 6px;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap;}
+.sig.bull{background:rgba(0,230,118,0.1);color:var(--green);border:1px solid rgba(0,230,118,0.25);}
+.sig.bear{background:rgba(255,23,68,0.1);color:var(--red);border:1px solid rgba(255,23,68,0.25);}
+.sig.neu{background:rgba(255,193,7,0.1);color:var(--gold);border:1px solid rgba(255,193,7,0.25);}
+.sig.info{background:rgba(0,212,255,0.07);color:var(--accent);border:1px solid rgba(0,212,255,0.2);}
 
-    ol {
-      padding-left: 40px;
-      line-height: 2.2;
-    }
+.ta-grid{display:flex;gap:10px;font-size:9px;flex-wrap:wrap;margin-bottom:7px;}
+.ta-item{display:flex;flex-direction:column;align-items:center;min-width:30px;}
+.ta-v{font-size:10px;color:var(--text);}
+.ta-l{font-size:7px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-top:1px;}
 
-    ol li {
-      margin-bottom: 15px;
-    }
+.score-wrap{display:flex;align-items:center;gap:8px;}
+.score-n{
+  font-family:var(--head);font-size:1.1rem;font-weight:900;min-width:32px;
+}
+.score-bar{flex:1;height:5px;background:var(--border2);max-width:150px;}
+.score-fill-bar{height:100%;transition:width 0.5s ease;}
+.score-fill-bar.h{background:linear-gradient(90deg,var(--green2),var(--green));}
+.score-fill-bar.m{background:linear-gradient(90deg,#e65100,var(--gold));}
+.score-fill-bar.l{background:linear-gradient(90deg,#b71c1c,var(--red));}
+.score-sub{font-size:8px;color:var(--text2);}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 25px 0;
-      background: rgba(13,27,42,0.6);
-      border-radius: 12px;
-      overflow: hidden;
-    }
+/* Data confidence */
+.confidence{font-size:8px;color:var(--text2);margin-top:5px;}
+.conf-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:3px;vertical-align:middle;}
 
-    th, td {
-      padding: 16px;
-      text-align: center;
-      border: 1px solid rgba(100,181,246,0.3);
-    }
+/* Column: Price */
+.c-price{text-align:right;}
+.price-big{font-family:var(--head);font-size:1.4rem;font-weight:900;color:var(--accent);}
+.price-chg{font-size:10px;margin-top:2px;}
+.price-chg.pos{color:var(--green);}
+.price-chg.neg{color:var(--red);}
+.price-meta{font-size:8px;color:var(--text2);margin-top:4px;line-height:1.8;}
+.target-price{font-size:9px;margin-top:6px;padding:4px 8px;background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.2);color:var(--green);}
 
-    th {
-      background: rgba(33,150,243,0.3);
-      color: #64b5f6;
-      font-weight: 700;
-      font-size: 1.15rem;
-    }
+/* Column: Action */
+.c-act{text-align:center;}
+.rec{
+  display:block;font-family:var(--head);font-size:10px;font-weight:900;
+  padding:6px 8px;letter-spacing:1px;margin-bottom:6px;
+}
+.rec.sb{background:var(--green);color:#000;}
+.rec.b{background:rgba(0,230,118,0.15);color:var(--green);border:1px solid var(--green);}
+.rec.h{background:rgba(255,193,7,0.12);color:var(--gold);border:1px solid var(--gold);}
+.rec.s{background:rgba(255,109,0,0.12);color:var(--orange);border:1px solid var(--orange);}
+.rec.ss{background:var(--red);color:#fff;}
+.rsi-mini{font-size:8px;color:var(--text2);margin-top:3px;}
+.rsi-mini-bar{height:3px;background:var(--border2);margin-top:3px;position:relative;}
+.rsi-mini-fill{position:absolute;top:0;left:0;height:100%;}
 
-    td {
-      font-size: 1.1rem;
-    }
+/* No result */
+.empty{padding:24px;text-align:center;font-size:11px;color:var(--text2);border:1px dashed var(--border2);}
+.err-msg{padding:14px 18px;font-size:10px;line-height:1.8;border:1px solid;margin-top:8px;}
+.err-msg.e{background:rgba(255,23,68,0.05);border-color:rgba(255,23,68,0.3);color:#ff5577;}
+.err-msg.w{background:rgba(255,193,7,0.05);border-color:rgba(255,193,7,0.3);color:var(--gold);}
+.err-msg.i{background:rgba(0,212,255,0.04);border-color:rgba(0,212,255,0.2);color:var(--accent);}
 
-    .conclusion-box {
-      background: linear-gradient(135deg, rgba(76,175,80,0.2), rgba(76,175,80,0.1));
-      padding: 35px;
-      border-radius: 16px;
-      border-left: 8px solid #4caf50;
-      margin: 30px 0;
-      box-shadow: 0 6px 20px rgba(76,175,80,0.3);
-    }
+.disc{margin-top:24px;padding:14px;border:1px solid var(--border);font-size:9px;color:var(--text2);line-height:1.8;}
 
-    .conclusion-box p {
-      font-size: 1.25rem;
-      line-height: 1.9;
-      margin-bottom: 18px;
-    }
-
-    @media (max-width:1200px) {
-      .container { flex-direction:column; }
-      .sidebar { 
-        width:100%; 
-        border-right:none; 
-        border-bottom: 2px solid rgba(100,181,246,0.3); 
-      }
-      .slide-container { padding:35px 25px; }
-      .nav { 
-        left: 50%; 
-        transform: translateX(-50%); 
-        bottom: 20px; 
-      }
-      h2 { font-size: 2.2rem; }
-      .stats-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+@media(max-width:900px){
+  .card{grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;}
+  .c-rank{display:none;}
+  .c-ind{grid-column:1/-1;}
+  .sum.show{grid-template-columns:repeat(4,1fr);}
+  .hdr{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
+<div class="radar-bg"></div>
+<div class="wrap">
 
-<div class="slide-counter" id="slideCounter">Slide 1 / 16</div>
-
-<div class="container">
-  <div class="sidebar">
-    <div class="logo">
-      <h3>Benyamin Batau</h3>
-      <p>NIM 240020301078</p>
+<!-- HEADER -->
+<div class="hdr">
+  <div>
+    <div class="hdr-tag">◈ Alpha Hunter Pro — Stockbit Edition</div>
+    <h1>IDX <b>PENNY PROFIT</b> SCANNER</h1>
+    <p class="hdr-sub">
+      Multi-source real data: Yahoo Finance + Stooq + IDX + CNBC Asia.<br>
+      Analisis teknikal 8 indikator + Profit Scoring + Target Price + Link Stockbit langsung.<br>
+      Filter: Harga &lt; Rp 100 · Uptrend Confirmed · Prioritas Profit Tertinggi.
+    </p>
+    <div class="src-pills">
+      <span class="pill y">Yahoo Finance</span>
+      <span class="pill s">Stooq Charts</span>
+      <span class="pill i">IDX Data</span>
+      <span class="pill b">Stockbit Link</span>
+      <span class="pill g">Google Finance</span>
+      <span class="pill f">100% Free</span>
     </div>
-    
-    <div class="sidebar-content">
-      <p style="margin-top:20px; color:#64b5f6; font-weight:600;">Pembimbing:</p>
-      <p><strong>I.</strong> Prof. Dr. Darmawang, M.Kes</p>
-      <p><strong>II.</strong> Prof. Ir. H. Muh. Yahya, M.Kes., M.Eng., IPU., ASEAN Eng.</p>
-      
-      <p style="margin-top:30px; color:#64b5f6; font-weight:600;">Program Studi:</p>
-      <p>Pendidikan Teknologi Kejuruan<br>Pascasarjana<br>Universitas Negeri Makassar</p>
-      
-      <p style="margin-top:30px; color:#64b5f6; font-weight:600;">Lokasi Penelitian:</p>
-      <p>SMK Negeri 1 Sumarorong<br>Kabupaten Mamasa<br>Sulawesi Barat</p>
-    </div>
-    
-    <a href="https://benyaminbatau.github.io/BENYAMIN-BATAU-APP-SPARKPLUG-DIAGNOSIS/"
-       target="_blank"
-       class="demo-link">
-       🚀 Demo Aplikasi Color Grab
-    </a>
   </div>
-
-  <div class="slide-container">
-
-    <!-- Slide 1: Judul -->
-    <div class="slide active">
-      <h2 style="font-size:3.2rem; margin-bottom:40px;">Penerapan Metode Deteksi Insulator Busi</h2>
-      <h3 style="text-align:center; font-size:2.2rem; color:#90caf9; margin-bottom:50px;">
-        Menggunakan Aplikasi Color Grab<br>Berbantuan Analisis ChatGPT<br>dalam Praktik Pemeliharaan Mesin
-      </h3>
-      
-      <div class="stats-grid" style="margin-top:60px;">
-        <div class="stat-card">
-          <div class="stat-label">Lokasi Penelitian</div>
-          <div class="stat-value" style="font-size:1.8rem;">SMK N 1</div>
-          <div class="stat-label">Sumarorong, Mamasa</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Sampel Penelitian</div>
-          <div class="stat-value">44</div>
-          <div class="stat-label">Siswa (2 Kelas)</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Metode</div>
-          <div class="stat-value" style="font-size:1.8rem;">Quasi</div>
-          <div class="stat-label">Experimental Design</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 2: Abstrak -->
-    <div class="slide">
-      <h2>Abstrak</h2>
-      <div class="highlight" style="font-size:1.15rem; line-height:1.8;">
-        <p><strong>Kata Kunci:</strong> Aplikasi Color Grab, ChatGPT, Diagnosis Kondisi Mesin, Hasil Belajar, Pendidikan Kejuruan, Teknik Otomotif</p>
-        
-        <p style="margin-top:20px;">Penelitian ini dilatarbelakangi oleh <strong>rendahnya akurasi dan tingginya subjektivitas</strong> siswa SMK dalam mendiagnosis kondisi mesin berdasarkan warna center insulator busi. Pengamatan visual secara manual menyebabkan perbedaan interpretasi yang menghambat pencapaian kompetensi siswa.</p>
-        
-        <p>Sebagai solusi, penelitian ini menguji efektivitas integrasi <strong>aplikasi Color Grab dan ChatGPT</strong> sebagai media pembelajaran berbasis digital melalui metode <strong>quasi eksperimen dengan desain nonequivalent control group</strong>.</p>
-        
-        <p><strong>Hasil penelitian menunjukkan:</strong> Penggunaan Color Grab terbukti mampu mengonversi data visual menjadi data digital yang objektif, sementara ChatGPT berperan efektif dalam memberikan analisis diagnostik yang akurat. Pemanfaatan kedua teknologi ini secara signifikan mampu meningkatkan objektivitas diagnosis serta hasil belajar siswa pada program keahlian teknik otomotif.</p>
-      </div>
-    </div>
-
-    <!-- Slide 3: Latar Belakang -->
-    <div class="slide">
-      <h2>Latar Belakang & Pentingnya Penelitian</h2>
-      <div class="highlight">
-        <h3 style="color:#ff5252;">🔴 Permasalahan:</h3>
-        <p>• Analisis warna insulator busi secara manual bersifat <strong>subjektif</strong></p>
-        <p>• Tingkat akurasi diagnosis kondisi mesin <strong>rendah</strong></p>
-        <p>• <strong>Kesenjangan kompetensi</strong> (skill gap) lulusan SMK dengan kebutuhan industri otomotif</p>
-        
-        <h3 style="color:#4caf50; margin-top:30px;">✅ Solusi Penelitian:</h3>
-        <p>• Integrasi <strong>aplikasi Color Grab</strong> untuk ekstraksi data objektif berbasis nilai RGB/HEX</p>
-        <p>• Kolaborasi dengan <strong>ChatGPT</strong> sebagai instrumen analisis kontekstual</p>
-        <p>• Menciptakan ekosistem pembelajaran interaktif relevan dengan <strong>Industri 4.0</strong></p>
-        
-        <h3 style="color:#2196f3; margin-top:30px;">🎯 Tujuan:</h3>
-        <p>Mengoptimalkan pemahaman konseptual, mengasah keterampilan teknis, serta meningkatkan hasil belajar siswa TSM melalui pendekatan diagnosis digital yang presisi</p>
-      </div>
-    </div>
-
-    <!-- Slide 4: Rumusan Masalah -->
-    <div class="slide">
-      <h2>Rumusan Masalah</h2>
-      <div class="highlight">
-        <ol>
-          <li><strong>Bagaimana</strong> pemanfaatan aplikasi Color Grab berbantuan analisis ChatGPT dalam mengakurasi dan menginterpretasikan data warna insulator busi untuk mendukung peningkatan pemahaman siswa terhadap kondisi mesin?</li>
-          
-          <li><strong>Sejauh mana</strong> penerapan aplikasi Color Grab berbantuan analisis ChatGPT dapat meningkatkan keterampilan siswa pada pembelajaran pemeliharaan mesin Kompetensi Keahlian TKR dan TSM?</li>
-          
-          <li><strong>Apakah ada perbedaan</strong> hasil belajar antara kelas eksperimen yang menggunakan aplikasi Color Grab berbantuan analisis ChatGPT dengan kelas kontrol yang melaksanakan pembelajaran konvensional?</li>
-        </ol>
-      </div>
-    </div>
-
-    <!-- Slide 5: Validitas & Reliabilitas -->
-    <div class="slide">
-      <h2>Uji Validitas & Reliabilitas Instrumen</h2>
-      
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-label">Jumlah Butir Soal</div>
-          <div class="stat-value">24</div>
-          <div class="stat-label">Semua Valid</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Jumlah Responden</div>
-          <div class="stat-value">25</div>
-          <div class="stat-label">N = 25, df = 23</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">r-tabel (α=0,05)</div>
-          <div class="stat-value">0,396</div>
-          <div class="stat-label">Kriteria Validitas</div>
-        </div>
-      </div>
-
-      <div class="highlight" style="margin-top:30px;">
-        <h3>📊 Hasil Uji Validitas:</h3>
-        <p>• Range r-hitung: <strong>0,403 – 0,778</strong></p>
-        <p>• Semua nilai r-hitung > r-tabel (0,396)</p>
-        <p>• <strong style="color:#4caf50;">✓ Semua 24 butir soal VALID</strong></p>
-        
-        <h3 style="margin-top:25px;">📊 Hasil Uji Reliabilitas:</h3>
-        <p>• Cronbach's Alpha = <strong style="color:#4caf50; font-size:1.4rem;">0,914</strong></p>
-        <p>• Kategori: <strong>SANGAT RELIABEL</strong> (≥ 0,80)</p>
-        
-        <p style="margin-top:25px; font-size:1.3rem; color:#4caf50; text-align:center;">
-          <strong>✓ Instrumen VALID & RELIABEL untuk mengukur hasil belajar diagnosis mesin</strong>
-        </p>
-      </div>
-    </div>
-
-    <!-- Slide 6: Hasil Observasi -->
-    <div class="slide">
-      <h2>Hasil Observasi Aktivitas Siswa</h2>
-      <div class="chart-container"><canvas id="obsChart"></canvas></div>
-      
-      <div class="comparison-box">
-        <div class="comparison-item eksperimen">
-          <p style="color:#4caf50; font-weight:700; font-size:1.3rem; margin-bottom:15px;">Kelas Eksperimen (n=22)</p>
-          <p>Sangat Baik (21-23): <strong>27,27%</strong> (6 siswa)</p>
-          <p>Baik (18-20): <strong>36,36%</strong> (8 siswa)</p>
-          <p>Cukup (15-17): <strong>31,82%</strong> (7 siswa)</p>
-          <p>Kurang (11-14): <strong>4,55%</strong> (1 siswa)</p>
-          <p style="margin-top:15px; color:#4caf50;">Rata-rata: <strong>19,32</strong> | SD: <strong>3,23</strong></p>
-        </div>
-        <div class="comparison-item kontrol">
-          <p style="color:#2196f3; font-weight:700; font-size:1.3rem; margin-bottom:15px;">Kelas Kontrol (n=22)</p>
-          <p>Sangat Baik (21-23): <strong>31,82%</strong> (7 siswa)</p>
-          <p>Baik (18-20): <strong>27,27%</strong> (6 siswa)</p>
-          <p>Cukup (15-17): <strong>9,09%</strong> (2 siswa)</p>
-          <p>Kurang (11-14): <strong>31,82%</strong> (7 siswa)</p>
-          <p style="margin-top:15px; color:#2196f3;">Rata-rata: <strong>17,36</strong> | SD: <strong>4,30</strong></p>
-        </div>
-      </div>
-      
-      <p style="text-align:center; margin-top:25px; font-size:1.25rem; color:#64b5f6;">
-        <strong>Kelas eksperimen lebih konsisten di kategori Baik & Cukup, dengan variabilitas lebih rendah</strong>
-      </p>
-    </div>
-
-    <!-- Slide 7: Data Pretest -->
-    <div class="slide">
-      <h2>Hasil Pretest (Kemampuan Awal)</h2>
-      
-      <div class="stats-grid">
-        <div class="stat-card eksperimen">
-          <div class="stat-label">Kelas Eksperimen</div>
-          <div class="stat-value">37,12</div>
-          <div class="stat-label">Rata-rata Pretest</div>
-        </div>
-        <div class="stat-card kontrol">
-          <div class="stat-label">Kelas Kontrol</div>
-          <div class="stat-value">39,20</div>
-          <div class="stat-label">Rata-rata Pretest</div>
-        </div>
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Statistik</th>
-            <th>Kelas Eksperimen</th>
-            <th>Kelas Kontrol</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Jumlah Siswa</strong></td>
-            <td>22</td>
-            <td>22</td>
-          </tr>
-          <tr>
-            <td><strong>Total Nilai</strong></td>
-            <td>816,67</td>
-            <td>862,49</td>
-          </tr>
-          <tr>
-            <td><strong>Nilai Maksimal</strong></td>
-            <td>50,00</td>
-            <td>58,33</td>
-          </tr>
-          <tr>
-            <td><strong>Nilai Minimal</strong></td>
-            <td>25,00</td>
-            <td>20,83</td>
-          </tr>
-          <tr>
-            <td><strong>Rata-rata</strong></td>
-            <td style="color:#4caf50; font-weight:700;">37,12</td>
-            <td style="color:#2196f3; font-weight:700;">39,20</td>
-          </tr>
-          <tr>
-            <td><strong>Simpangan Baku</strong></td>
-            <td>6,67</td>
-            <td>9,85</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="chart-container"><canvas id="pretestChart"></canvas></div>
-
-      <p style="text-align:center; margin-top:20px; font-size:1.25rem; color:#64b5f6;">
-        <strong>Kedua kelas memiliki kemampuan awal yang relatif setara (selisih 2,08 poin)</strong>
-      </p>
-    </div>
-
-    <!-- Slide 8: Kategori Pretest -->
-    <div class="slide">
-      <h2>Distribusi Kategori Pretest</h2>
-      <div class="chart-container"><canvas id="pretestKategoriChart"></canvas></div>
-      
-      <div class="highlight">
-        <h3 style="text-align:center; color:#ff9800;">Kondisi Awal Kemampuan Siswa</h3>
-        <table style="margin-top:20px;">
-          <thead>
-            <tr>
-              <th>Kategori</th>
-              <th>Kelas Eksperimen</th>
-              <th>Kelas Kontrol</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Sangat Baik (90-100)</td>
-              <td>0 siswa (0%)</td>
-              <td>0 siswa (0%)</td>
-            </tr>
-            <tr>
-              <td>Baik (80-89)</td>
-              <td>0 siswa (0%)</td>
-              <td>0 siswa (0%)</td>
-            </tr>
-            <tr>
-              <td>Cukup (70-79)</td>
-              <td>0 siswa (0%)</td>
-              <td>0 siswa (0%)</td>
-            </tr>
-            <tr>
-              <td><strong>Kurang (&lt;70)</strong></td>
-              <td style="color:#ff5252; font-weight:700;">22 siswa (100%)</td>
-              <td style="color:#ff5252; font-weight:700;">22 siswa (100%)</td>
-            </tr>
-          </tbody>
-        </table>
-        
-        <p style="text-align:center; margin-top:25px; font-size:1.3rem; color:#ff9800;">
-          <strong>100% siswa dari kedua kelas berada pada kategori KURANG</strong><br>
-          <span style="font-size:1.1rem;">Menunjukkan kesetaraan kemampuan awal yang sangat rendah</span>
-        </p>
-      </div>
-    </div>
-
-    <!-- Slide 9: Data Posttest -->
-    <div class="slide">
-      <h2>Hasil Posttest (Hasil Akhir Pembelajaran)</h2>
-      
-      <div class="stats-grid">
-        <div class="stat-card eksperimen">
-          <div class="stat-label">Kelas Eksperimen</div>
-          <div class="stat-value">83,14</div>
-          <div class="stat-label">Rata-rata Posttest</div>
-        </div>
-        <div class="stat-card kontrol">
-          <div class="stat-label">Kelas Kontrol</div>
-          <div class="stat-value">76,70</div>
-          <div class="stat-label">Rata-rata Posttest</div>
-        </div>
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Statistik</th>
-            <th>Kelas Eksperimen</th>
-            <th>Kelas Kontrol</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Jumlah Siswa</strong></td>
-            <td>22</td>
-            <td>22</td>
-          </tr>
-          <tr>
-            <td><strong>Total Nilai</strong></td>
-            <td>1.829,17</td>
-            <td>1.687,50</td>
-          </tr>
-          <tr>
-            <td><strong>Nilai Maksimal</strong></td>
-            <td style="color:#4caf50; font-weight:700;">95,83</td>
-            <td>91,67</td>
-          </tr>
-          <tr>
-            <td><strong>Nilai Minimal</strong></td>
-            <td style="color:#4caf50; font-weight:700;">66,67</td>
-            <td>62,50</td>
-          </tr>
-          <tr>
-            <td><strong>Rata-rata</strong></td>
-            <td style="color:#4caf50; font-weight:700; font-size:1.3rem;">83,14</td>
-            <td style="color:#2196f3; font-weight:700;">76,70</td>
-          </tr>
-          <tr>
-            <td><strong>Simpangan Baku</strong></td>
-            <td style="color:#4caf50; font-weight:700;">6,86</td>
-            <td>8,10</td>
-          </tr>
-          <tr>
-            <td><strong>Selisih Rata-rata</strong></td>
-            <td colspan="2" style="color:#ffc107; font-weight:700; font-size:1.2rem;">6,44 poin</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="chart-container"><canvas id="posttestChart"></canvas></div>
-
-      <p style="text-align:center; margin-top:20px; font-size:1.3rem; color:#4caf50;">
-        <strong>Kelas eksperimen menunjukkan hasil yang lebih tinggi dan lebih konsisten (SD lebih rendah)</strong>
-      </p>
-    </div>
-
-    <!-- Slide 10: Kategori Posttest -->
-    <div class="slide">
-      <h2>Distribusi Kategori Posttest</h2>
-      <div class="chart-container"><canvas id="posttestKategoriChart"></canvas></div>
-      
-      <div class="comparison-box" style="margin-top:30px;">
-        <div class="comparison-item eksperimen">
-          <p style="color:#4caf50; font-weight:700; font-size:1.3rem; margin-bottom:15px;">Kelas Eksperimen</p>
-          <p>Sangat Baik (90-100): <strong>18,18%</strong> (4 siswa)</p>
-          <p>Baik (80-89): <strong style="color:#4caf50;">50,00%</strong> (11 siswa)</p>
-          <p>Cukup (70-79): <strong>27,27%</strong> (6 siswa)</p>
-          <p>Kurang (&lt;70): <strong>4,55%</strong> (1 siswa)</p>
-          <p style="margin-top:15px; border-top:2px solid #4caf50; padding-top:10px;">
-            <strong style="color:#4caf50; font-size:1.2rem;">Kategori Baik+ : 68,18%</strong>
-          </p>
-        </div>
-        <div class="comparison-item kontrol">
-          <p style="color:#2196f3; font-weight:700; font-size:1.3rem; margin-bottom:15px;">Kelas Kontrol</p>
-          <p>Sangat Baik (90-100): <strong>9,09%</strong> (2 siswa)</p>
-          <p>Baik (80-89): <strong>22,73%</strong> (5 siswa)</p>
-          <p>Cukup (70-79): <strong style="color:#ff9800;">54,55%</strong> (12 siswa)</p>
-          <p>Kurang (&lt;70): <strong>13,64%</strong> (3 siswa)</p>
-          <p style="margin-top:15px; border-top:2px solid #2196f3; padding-top:10px;">
-            <strong style="color:#2196f3; font-size:1.2rem;">Kategori Baik+ : 31,82%</strong>
-          </p>
-        </div>
-      </div>
-
-      <div class="highlight" style="margin-top:30px;">
-        <p style="text-align:center; font-size:1.3rem; color:#4caf50;">
-          <strong>Kelas eksperimen memiliki 2x lebih banyak siswa pada kategori Baik atau lebih tinggi<br>
-          (68,18% vs 31,82%)</strong>
-        </p>
-      </div>
-    </div>
-
-    <!-- Slide 11: Data N-Gain -->
-    <div class="slide">
-      <h2>Nilai N-Gain (Efektivitas Peningkatan)</h2>
-      
-      <div class="stats-grid">
-        <div class="stat-card eksperimen">
-          <div class="stat-label">Kelas Eksperimen</div>
-          <div class="stat-value">0,74</div>
-          <div class="stat-label" style="color:#4caf50; font-weight:700;">Kategori TINGGI</div>
-        </div>
-        <div class="stat-card kontrol">
-          <div class="stat-label">Kelas Kontrol</div>
-          <div class="stat-value">0,61</div>
-          <div class="stat-label" style="color:#ff9800; font-weight:700;">Kategori SEDANG</div>
-        </div>
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Statistik N-Gain</th>
-            <th>Kelas Eksperimen</th>
-            <th>Kelas Kontrol</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Total N-Gain</strong></td>
-            <td>16,18</td>
-            <td>13,51</td>
-          </tr>
-          <tr>
-            <td><strong>N-Gain Maksimal</strong></td>
-            <td style="color:#4caf50; font-weight:700;">0,92</td>
-            <td>0,88</td>
-          </tr>
-          <tr>
-            <td><strong>N-Gain Minimal</strong></td>
-            <td style="color:#4caf50; font-weight:700;">0,50</td>
-            <td>0,43</td>
-          </tr>
-          <tr>
-            <td><strong>Rata-rata N-Gain</strong></td>
-            <td style="color:#4caf50; font-weight:700; font-size:1.4rem;">0,74</td>
-            <td style="color:#ff9800; font-weight:700;">0,61</td>
-          </tr>
-          <tr>
-            <td><strong>Simpangan Baku</strong></td>
-            <td style="color:#4caf50; font-weight:700;">0,10</td>
-            <td>0,13</td>
-          </tr>
-          <tr>
-            <td><strong>Kategori</strong></td>
-            <td style="color:#4caf50; font-weight:700;">TINGGI (≥0,7)</td>
-            <td style="color:#ff9800; font-weight:700;">SEDANG (0,3-0,7)</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="chart-container"><canvas id="ngainChart"></canvas></div>
-
-      <div class="highlight" style="margin-top:20px;">
-        <p style="font-size:1.2rem;"><strong>Interpretasi N-Gain (Kriteria Hake, 1998):</strong></p>
-        <p>• g ≥ 0,7 : <strong style="color:#4caf50;">Tinggi (High gain)</strong></p>
-        <p>• 0,3 ≤ g &lt; 0,7 : <strong style="color:#ff9800;">Sedang (Medium gain)</strong></p>
-        <p>• g &lt; 0,3 : <strong style="color:#ff5252;">Rendah (Low gain)</strong></p>
-      </div>
-    </div>
-
-    <!-- Slide 12: Kategori N-Gain -->
-    <div class="slide">
-      <h2>Distribusi Kategori N-Gain</h2>
-      <div class="chart-container"><canvas id="ngainKategoriChart"></canvas></div>
-      
-      <div class="comparison-box" style="margin-top:30px;">
-        <div class="comparison-item eksperimen">
-          <p style="color:#4caf50; font-weight:700; font-size:1.3rem; margin-bottom:15px;">Kelas Eksperimen</p>
-          <p>Tinggi (g ≥ 0,7): <strong style="color:#4caf50; font-size:1.4rem;">68,18%</strong> (15 siswa)</p>
-          <p>Sedang (0,3-0,7): <strong>31,82%</strong> (7 siswa)</p>
-          <p>Rendah (g &lt; 0,3): <strong>0%</strong> (0 siswa)</p>
-        </div>
-        <div class="comparison-item kontrol">
-          <p style="color:#2196f3; font-weight:700; font-size:1.3rem; margin-bottom:15px;">Kelas Kontrol</p>
-          <p>Tinggi (g ≥ 0,7): <strong>31,82%</strong> (7 siswa)</p>
-          <p>Sedang (0,3-0,7): <strong style="color:#ff9800; font-size:1.4rem;">68,18%</strong> (15 siswa)</p>
-          <p>Rendah (g &lt; 0,3): <strong>0%</strong> (0 siswa)</p>
-        </div>
-      </div>
-
-      <div class="highlight" style="margin-top:30px;">
-        <h3 style="text-align:center; color:#4caf50;">Temuan Penting:</h3>
-        <p style="text-align:center; font-size:1.3rem;">
-          <strong>Kelas eksperimen memiliki proporsi siswa dengan peningkatan TINGGI lebih dari 2x lipat<br>
-          (68,18% vs 31,82%)</strong>
-        </p>
-        <p style="text-align:center; margin-top:15px; font-size:1.2rem;">
-          Tidak ada siswa pada kategori Rendah di kedua kelas,<br>
-          menunjukkan pembelajaran tetap memberikan dampak positif minimal sedang
-        </p>
-      </div>
-    </div>
-
-    <!-- Slide 13: Perbandingan Pre-Post-Gain -->
-    <div class="slide">
-      <h2>Perbandingan Progres Pembelajaran</h2>
-      <div class="chart-container"><canvas id="progresChart"></canvas></div>
-      
-      <div class="stats-grid" style="margin-top:30px;">
-        <div class="stat-card">
-          <div class="stat-label">Peningkatan Eksperimen</div>
-          <div class="stat-value" style="color:#4caf50;">+46,02</div>
-          <div class="stat-label">Poin (37,12 → 83,14)</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Peningkatan Kontrol</div>
-          <div class="stat-value" style="color:#2196f3;">+37,50</div>
-          <div class="stat-label">Poin (39,20 → 76,70)</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Selisih Peningkatan</div>
-          <div class="stat-value" style="color:#ffc107;">+8,52</div>
-          <div class="stat-label">Poin lebih tinggi</div>
-        </div>
-      </div>
-
-      <div class="highlight" style="margin-top:30px;">
-        <p style="text-align:center; font-size:1.3rem; color:#4caf50;">
-          <strong>Dari baseline pretest yang hampir sama,<br>
-          kelas eksperimen menunjukkan peningkatan yang lebih besar dan lebih efektif</strong>
-        </p>
-      </div>
-    </div>
-
-    <!-- Slide 14: Uji Prasyarat -->
-    <div class="slide">
-      <h2>Hasil Uji Prasyarat Analisis</h2>
-      
-      <div class="highlight">
-        <h3 style="color:#4caf50;">✓ Uji Normalitas (Shapiro-Wilk)</h3>
-        <table style="margin:15px 0;">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Kelas Eksperimen</th>
-              <th>Kelas Kontrol</th>
-              <th>Kesimpulan</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Pretest</td>
-              <td>Sig. 0,442 > 0,05</td>
-              <td>Sig. 0,621 > 0,05</td>
-              <td style="color:#4caf50; font-weight:700;">Normal ✓</td>
-            </tr>
-            <tr>
-              <td>Posttest</td>
-              <td>Sig. 0,527 > 0,05</td>
-              <td>Sig. 0,495 > 0,05</td>
-              <td style="color:#4caf50; font-weight:700;">Normal ✓</td>
-            </tr>
-            <tr>
-              <td>N-Gain</td>
-              <td>Sig. 0,969 > 0,05</td>
-              <td>Sig. 0,427 > 0,05</td>
-              <td style="color:#4caf50; font-weight:700;">Normal ✓</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3 style="color:#4caf50; margin-top:30px;">✓ Uji Homogenitas (Levene's Test)</h3>
-        <table style="margin:15px 0;">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Levene Statistic</th>
-              <th>Signifikansi</th>
-              <th>Kesimpulan</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Pretest</td>
-              <td>2,623</td>
-              <td>0,113 > 0,05</td>
-              <td style="color:#4caf50; font-weight:700;">Homogen ✓</td>
-            </tr>
-            <tr>
-              <td>Posttest</td>
-              <td>0,813</td>
-              <td>0,372 > 0,05</td>
-              <td style="color:#4caf50; font-weight:700;">Homogen ✓</td>
-            </tr>
-            <tr>
-              <td>N-Gain</td>
-              <td>3,262</td>
-              <td>0,078 > 0,05</td>
-              <td style="color:#4caf50; font-weight:700;">Homogen ✓</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3 style="color:#4caf50; margin-top:30px;">✓ Uji Linearitas</h3>
-        <p>• Posttest vs Pretest: Sig. Linearity = 0,041 < 0,05 (Linear ✓)</p>
-        <p>• N-Gain vs Posttest: Sig. Linearity = 0,000 < 0,05 (Linear ✓, R² = 0,864)</p>
-      </div>
-
-      <div class="conclusion-box" style="margin-top:30px;">
-        <p style="text-align:center; font-size:1.3rem; color:#4caf50;">
-          <strong>✓ Semua uji prasyarat terpenuhi → Layak untuk uji statistik parametrik</strong>
-        </p>
-      </div>
-    </div>
-
-    <!-- Slide 15: Uji Hipotesis -->
-    <div class="slide">
-      <h2>Hasil Uji Hipotesis</h2>
-      
-      <div class="highlight">
-        <h3 style="text-align:center; color:#64b5f6;">Independent Sample t-Test (Posttest)</h3>
-        
-        <div class="stats-grid" style="margin:30px 0;">
-          <div class="stat-card">
-            <div class="stat-label">t-hitung</div>
-            <div class="stat-value" style="color:#ff5252;">-2,846</div>
-            <div class="stat-label">df = 42</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Signifikansi (2-tailed)</div>
-            <div class="stat-value" style="color:#4caf50;">0,007</div>
-            <div class="stat-label">< 0,05</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Selisih Rata-rata</div>
-            <div class="stat-value" style="color:#ffc107;">6,44</div>
-            <div class="stat-label">Poin</div>
-          </div>
-        </div>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Kelas</th>
-              <th>N</th>
-              <th>Mean</th>
-              <th>Std. Deviation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Eksperimen</td>
-              <td>22</td>
-              <td style="color:#4caf50; font-weight:700;">83,14</td>
-              <td>6,86</td>
-            </tr>
-            <tr>
-              <td>Kontrol</td>
-              <td>22</td>
-              <td style="color:#2196f3; font-weight:700;">76,70</td>
-              <td>8,10</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="conclusion-box" style="margin-top:30px;">
-          <p style="font-size:1.4rem; text-align:center;">
-            <strong style="color:#ff5252;">H₀ DITOLAK</strong> | <strong style="color:#4caf50;">Hₐ DITERIMA</strong>
-          </p>
-          <p style="font-size:1.3rem; text-align:center; margin-top:15px; color:#4caf50;">
-            <strong>Ada perbedaan hasil belajar yang SIGNIFIKAN<br>
-            Kelas eksperimen lebih tinggi daripada kelas kontrol</strong>
-          </p>
-        </div>
-      </div>
-
-      <div class="chart-container"><canvas id="hipotesisChart"></canvas></div>
-
-      <p style="text-align:center; margin-top:20px; font-size:1.25rem; color:#64b5f6;">
-        Interval Kepercayaan 95%: [-11,006 hingga -1,873] → Tidak melintasi nol, perbedaan stabil
-      </p>
-    </div>
-
-    <!-- Slide 16: Kesimpulan -->
-    <div class="slide">
-      <h2 style="color:#4caf50;">Kesimpulan Penelitian</h2>
-      
-      <div class="conclusion-box">
-        <h3 style="color:#64b5f6;">🎯 Berdasarkan hasil penelitian dan analisis data:</h3>
-        
-        <p><strong>1. Efektivitas Aplikasi Color Grab & ChatGPT:</strong></p>
-        <p style="padding-left:30px;">• Color Grab efektif mengonversi data visual menjadi data digital objektif (RGB/HEX)</p>
-        <p style="padding-left:30px;">• ChatGPT berperan efektif memberikan analisis diagnostik yang akurat dan kontekstual</p>
-        <p style="padding-left:30px;">• Meningkatkan akurasi dan objektivitas diagnosis kondisi mesin berbasis warna insulator busi</p>
-        
-        <p style="margin-top:20px;"><strong>2. Peningkatan Hasil Belajar Signifikan:</strong></p>
-        <p style="padding-left:30px;">• Kelas eksperimen: Rata-rata posttest <strong style="color:#4caf50;">83,14</strong> (N-Gain: <strong>0,74</strong> - Kategori TINGGI)</p>
-        <p style="padding-left:30px;">• Kelas kontrol: Rata-rata posttest <strong>76,70</strong> (N-Gain: <strong>0,61</strong> - Kategori SEDANG)</p>
-        <p style="padding-left:30px;">• Selisih signifikan: <strong style="color:#ffc107;">6,44 poin</strong> (uji-t: Sig. 0,007 < 0,05)</p>
-        
-        <p style="margin-top:20px;"><strong>3. Perbedaan Hasil Belajar Signifikan Secara Statistik:</strong></p>
-        <p style="padding-left:30px;">• Independent t-Test: t = -2,846, Sig. (2-tailed) = <strong style="color:#4caf50;">0,007 < 0,05</strong></p>
-        <p style="padding-left:30px;">• H₀ ditolak → Ada perbedaan signifikan antara kelas eksperimen dan kontrol</p>
-        <p style="padding-left:30px;">• Pembelajaran berbantuan Color Grab & ChatGPT <strong>lebih efektif</strong> dari pembelajaran konvensional</p>
-        
-        <p style="margin-top:20px;"><strong>4. Distribusi Pencapaian Lebih Baik:</strong></p>
-        <p style="padding-left:30px;">• 68,18% siswa eksperimen mencapai kategori Baik/Sangat Baik vs 31,82% kontrol</p>
-        <p style="padding-left:30px;">• 68,18% siswa eksperimen mencapai N-Gain Tinggi vs 31,82% kontrol</p>
-        <p style="padding-left:30px;">• Peningkatan lebih merata dengan variabilitas lebih rendah</p>
-      </div>
-
-      <h1 style="text-align:center; margin:80px 0 40px; font-size:3.5rem; color:#4caf50;">
-        TERIMA KASIH
-      </h1>
-      <p style="text-align:center; font-size:2rem; color:#64b5f6;">Benyamin Batau</p>
-      <p style="text-align:center; font-size:1.5rem; color:#90caf9;">NIM 240020301078</p>
-      <p style="text-align:center; margin-top:30px; font-size:1.2rem; color:#b3e5fc;">
-        Program Studi Pendidikan Teknologi Kejuruan<br>
-        Pascasarjana Universitas Negeri Makassar
-      </p>
-    </div>
-
+  <div class="clock-box">
+    <span class="clock-time" id="clk">--:--:--</span>
+    <div class="clock-date" id="clkd">--</div>
+    <div id="mkts" class="mkt-badge closed">● CLOSED</div>
+    <div style="font-size:8px;color:var(--text2);margin-top:5px;" id="session-info">--</div>
   </div>
 </div>
 
-<div class="nav">
-  <button onclick="prev()">◀ Prev</button>
-  <button onclick="next()">Next ▶</button>
+<!-- CONTROLS -->
+<div class="ctrl">
+  <div class="ctrl-hdr">⚙ Konfigurasi Screening — Target: &lt;Rp100 Uptrend Profit</div>
+
+  <div style="font-size:8px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">WATCHLIST PRESET:</div>
+  <div class="presets">
+    <button class="pre on" onclick="setPreset('penny',this)">🎯 Penny &lt;100</button>
+    <button class="pre" onclick="setPreset('volatile',this)">⚡ High Volatile</button>
+    <button class="pre" onclick="setPreset('energy',this)">⛽ Energi</button>
+    <button class="pre" onclick="setPreset('infra',this)">🏗 Infrastruktur</button>
+    <button class="pre" onclick="setPreset('consumer',this)">🛒 Konsumer</button>
+    <button class="pre" onclick="setPreset('mining',this)">⛏ Pertambangan</button>
+    <button class="pre" onclick="setPreset('finance',this)">🏦 Keuangan</button>
+    <button class="pre" onclick="setPreset('custom',this)">✏ Custom</button>
+  </div>
+
+  <div class="fg">
+    <div class="fl">
+      <label>Max Harga (Rp)</label>
+      <input type="number" id="f-price" value="100" min="1">
+    </div>
+    <div class="fl">
+      <label>Min Harga (Rp)</label>
+      <input type="number" id="f-price-min" value="1" min="1">
+    </div>
+    <div class="fl">
+      <label>Min Volume Lot</label>
+      <input type="number" id="f-vol" value="500">
+    </div>
+    <div class="fl">
+      <label>RSI Min (Ideal 40)</label>
+      <input type="number" id="f-rsi-min" value="35" min="0" max="100">
+    </div>
+    <div class="fl">
+      <label>RSI Max (Ideal 65)</label>
+      <input type="number" id="f-rsi-max" value="68" min="0" max="100">
+    </div>
+    <div class="fl">
+      <label>Min Profit Score</label>
+      <input type="number" id="f-score" value="50" min="0" max="100">
+    </div>
+    <div class="fl">
+      <label>Trend Filter</label>
+      <select id="f-trend">
+        <option value="up">Uptrend Only ✅</option>
+        <option value="all">Semua Trend</option>
+        <option value="side">Sideways</option>
+      </select>
+    </div>
+    <div class="fl">
+      <label>Rekomendasi</label>
+      <select id="f-rec">
+        <option value="buy">BUY / STRONG BUY</option>
+        <option value="all">Semua</option>
+        <option value="hold">Hold</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="fg">
+    <div class="fl fc">
+      <label>Custom Watchlist (pisah koma) — kosongkan untuk pakai preset</label>
+      <input type="text" id="f-custom" placeholder="Contoh: GOTO,BUMI,DEWA,STRK,META,ENRG">
+    </div>
+  </div>
+
+  <button class="btn-go" id="scan-btn" onclick="runScan()">🔍 HUNT ALPHA — SCAN SEKARANG</button>
+</div>
+
+<!-- PROGRESS -->
+<div class="prog" id="prog">
+  <div class="prog-top">
+    <div class="prog-title">⚡ Multi-Source Scanning</div>
+    <div class="prog-pct"><span id="pd">0</span>/<span id="pt">0</span> — <span id="pp">0</span>%</div>
+  </div>
+  <div class="prog-track"><div class="prog-fill" id="pf"></div></div>
+  <div class="prog-log" id="plog"></div>
+</div>
+
+<!-- SUMMARY -->
+<div class="sum" id="sum">
+  <div class="si"><span class="v" id="s0">0</span><span class="l">Scanned</span></div>
+  <div class="si"><span class="v g" id="s1">0</span><span class="l">Uptrend 🚀</span></div>
+  <div class="si"><span class="v r" id="s2">0</span><span class="l">Downtrend</span></div>
+  <div class="si"><span class="v y" id="s3">0</span><span class="l">Buy Signal</span></div>
+  <div class="si"><span class="v p" id="s4">0</span><span class="l">Tier S/A</span></div>
+  <div class="si"><span class="v" id="s5">0</span><span class="l">Avg Score</span></div>
+  <div class="si"><span class="v g" id="s6">0</span><span class="l">Avg Target%</span></div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="tb" id="tb">
+  <div class="tb-l">
+    SORT:
+    <button class="tbtn on" onclick="doSort('score',this)">Profit Score</button>
+    <button class="tbtn" onclick="doSort('target',this)">Target%</button>
+    <button class="tbtn" onclick="doSort('price',this)">Harga</button>
+    <button class="tbtn" onclick="doSort('change',this)">% Change</button>
+    <button class="tbtn" onclick="doSort('rsi',this)">RSI</button>
+    <button class="tbtn" onclick="doSort('vol',this)">Volume</button>
+  </div>
+  <div class="tb-r">
+    <input type="text" placeholder="🔍 Cari saham..." oninput="doSearch(this.value)">
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="results"></div>
+
+<div class="disc">
+  ⚠ <strong>DISCLAIMER:</strong> Tool ini hanya untuk referensi analisis teknikal dari data publik Yahoo Finance via proxy gratis. Bukan rekomendasi investasi resmi. Data bisa delay 15-20 menit. Selalu verifikasi di Stockbit sebelum trading. Investasi saham mengandung risiko kehilangan modal. DYOR (Do Your Own Research).
+</div>
 </div>
 
 <script>
-let idx = 0;
-const slides = document.querySelectorAll('.slide');
-const totalSlides = slides.length;
-
-function updateCounter() {
-  document.getElementById('slideCounter').textContent = `Slide ${idx + 1} / ${totalSlides}`;
-}
-
-function show(n) {
-  slides.forEach(s => s.classList.remove('active'));
-  slides[n].classList.add('active');
-  updateCounter();
-}
-
-function next() { 
-  idx = (idx + 1) % slides.length; 
-  show(idx); 
-}
-
-function prev() { 
-  idx = (idx - 1 + slides.length) % slides.length; 
-  show(idx); 
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ') next();
-  if (e.key === 'ArrowLeft') prev();
-});
-
-// Chart configurations
-const chartColors = {
-  eksperimen: 'rgba(76, 175, 80, 0.8)',
-  kontrol: 'rgba(33, 150, 243, 0.8)',
-  eksperimenBorder: 'rgba(76, 175, 80, 1)',
-  kontrolBorder: 'rgba(33, 150, 243, 1)'
+// ══════════════════════════════════════════════
+// PRESETS — Watchlist IDX Penny Stocks
+// ══════════════════════════════════════════════
+const PRESETS = {
+  penny:    ['GOTO','DEWA','BUMI','BIPI','ENRG','WINE','STRK','META','TOSH','BULL','MITI','AWAN','BLTZ','DNAR','BEKS','BHAT','FORU','GAMA','RUNS','SAFE','NASI','LCGP','MABA','BBSS','COAL','WIFI','SICO','MARI','PMMP','SMKL','DNAR','HATM','TPMA','SMIL'],
+  volatile: ['GOTO','BUMI','DEWA','STRK','META','BIPI','ENRG','MITI','AWAN','BLTZ','BULL','RUNS','TOSH','WINE','FORU'],
+  energy:   ['ADRO','BUMI','PTBA','ITMG','ENRG','DEWA','BIPI','MEDC','ELSA','AKRA','HRUM','MYOH','GEMS','KKGI','PSAB'],
+  infra:    ['WIKA','PTPP','WSKT','ADHI','JSMR','TLKM','ISAT','EXCL','TBIG','TOWR','LINK','CENT','FREN','SUPR'],
+  consumer: ['UNVR','ICBP','INDF','MYOR','CLEO','DLTA','ADES','ROTI','SKBM','ULTJ','KEJU','SIDO','KINO','CMRY'],
+  mining:   ['ANTM','PTBA','TINS','INCO','MDKA','AMMN','BUMI','ITMG','MITI','PSAB','CITA','DKFT','SMMT','CKRA'],
+  finance:  ['BBRI','BBCA','BMRI','BBNI','BNGA','BDMN','BNLI','BJTM','BJBR','BTPS','BBYB','AGRO','AMAR','ARTO','BANK'],
+  custom:   []
 };
 
-const commonChartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: { 
-      position: 'top',
-      labels: { color: '#e3f2fd', font: { size: 14 } }
-    }
-  },
-  scales: {
-    y: { 
-      beginAtZero: true,
-      ticks: { color: '#e3f2fd' },
-      grid: { color: 'rgba(100, 181, 246, 0.1)' }
-    },
-    x: {
-      ticks: { color: '#e3f2fd' },
-      grid: { color: 'rgba(100, 181, 246, 0.1)' }
+const SECTOR_MAP = {
+  GOTO:'Teknologi',BUMI:'Batubara',DEWA:'Energi',BIPI:'Minyak & Gas',ENRG:'Energi',
+  WINE:'Konsumer',STRK:'Infrastruktur',META:'Teknologi',TOSH:'Elektronik',
+  BULL:'Keuangan',MITI:'Pertambangan',AWAN:'Teknologi',BLTZ:'Media',
+  DNAR:'Kesehatan',BEKS:'Konstruksi',FORU:'Properti',GAMA:'Properti',
+  RUNS:'Transportasi',SAFE:'Keamanan',ADRO:'Batubara',PTBA:'Batubara',
+  ITMG:'Batubara',HRUM:'Batubara',ANTM:'Pertambangan',INCO:'Pertambangan',
+  TLKM:'Telekomunikasi',BBRI:'Perbankan',BBCA:'Perbankan',BMRI:'Perbankan',
+  BBNI:'Perbankan',PGAS:'Gas',MEDC:'Minyak',ELSA:'Oilfield Services',
+  WIKA:'Konstruksi',PTPP:'Konstruksi',WSKT:'Konstruksi',JSMR:'Tol',
+  UNVR:'FMCG',ICBP:'Makanan',INDF:'Makanan',MYOR:'Makanan',
+};
+
+let curWatchlist = [...PRESETS.penny];
+let allData = [];
+let scanning = false;
+
+// ══════════════════════════════════════════════
+// CLOCK & MARKET STATUS
+// ══════════════════════════════════════════════
+function tick(){
+  const now = new Date();
+  const wib = new Date(now.toLocaleString('en-US',{timeZone:'Asia/Jakarta'}));
+  document.getElementById('clk').textContent = wib.toTimeString().slice(0,8);
+  document.getElementById('clkd').textContent = wib.toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+
+  const h=wib.getHours(), m=wib.getMinutes(), d=wib.getDay();
+  const wd=d>=1&&d<=5;
+  const inPre = wd && h===8 && m>=55;
+  const inSesi1 = wd && ((h===9)||(h>=10&&h<11)||(h===11&&m<30));
+  const inIstirahat = wd && ((h===11&&m>=30)||(h===12)||(h===13&&m<0));
+  const inSesi2 = wd && ((h>=13&&h<15)||(h===15&&m<50));
+  const isOpen = inSesi1||inSesi2;
+
+  const el=document.getElementById('mkts');
+  const si=document.getElementById('session-info');
+  if(inPre){el.textContent='◎ PRE-MARKET';el.className='mkt-badge open';si.textContent='Sesi Pre-Opening (08:55)';}
+  else if(inSesi1){el.textContent='● MARKET OPEN';el.className='mkt-badge open';si.textContent='Sesi I: 09:00–11:30';}
+  else if(inIstirahat){el.textContent='◌ ISTIRAHAT';el.className='mkt-badge closed';si.textContent='Sesi Istirahat: 11:30–13:30';}
+  else if(inSesi2){el.textContent='● MARKET OPEN';el.className='mkt-badge open';si.textContent='Sesi II: 13:30–15:49';}
+  else{el.textContent='● CLOSED';el.className='mkt-badge closed';si.textContent=wd?'After Hours':'Weekend — Market Tutup';}
+}
+setInterval(tick,1000); tick();
+
+// ══════════════════════════════════════════════
+// PRESET
+// ══════════════════════════════════════════════
+function setPreset(name,btn){
+  document.querySelectorAll('.pre').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const ci=document.getElementById('f-custom');
+  if(name==='custom'){ci.focus();return;}
+  ci.value='';
+  curWatchlist=[...PRESETS[name]];
+  if(['penny','volatile'].includes(name)){
+    document.getElementById('f-price').value=100;
+    document.getElementById('f-price-min').value=1;
+  } else {
+    document.getElementById('f-price').value=9999;
+    document.getElementById('f-price-min').value=1;
+  }
+}
+
+// ══════════════════════════════════════════════
+// CORS PROXIES — rotasi otomatis
+// ══════════════════════════════════════════════
+const PROXIES = [
+  u=>`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+  u=>`https://corsproxy.io/?${encodeURIComponent(u)}`,
+  u=>`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+  u=>`https://thingproxy.freeboard.io/fetch/${u}`,
+];
+
+async function proxyFetch(url, idx=0){
+  if(idx>=PROXIES.length) throw new Error('All proxies exhausted');
+  try{
+    const r=await fetch(PROXIES[idx](url),{signal:AbortSignal.timeout(9000)});
+    if(!r.ok) throw new Error(`HTTP ${r.status}`);
+    return await r.text();
+  } catch(e){
+    return proxyFetch(url, idx+1);
+  }
+}
+
+// ══════════════════════════════════════════════
+// SOURCE 1: YAHOO FINANCE — Harga + Historis
+// ══════════════════════════════════════════════
+async function fetchYahoo(ticker){
+  const sym=ticker+'.JK';
+  const url=`https://query1.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=90d&includePrePost=false`;
+  const txt=await proxyFetch(url);
+  const j=JSON.parse(txt);
+  const res=j?.chart?.result?.[0];
+  if(!res) throw new Error('Yahoo: no result');
+
+  const meta=res.meta;
+  const q=res.indicators?.quote?.[0];
+  const ts=res.timestamp||[];
+  const closes=[], vols=[], highs=[], lows=[], opens=[];
+  for(let i=0;i<(q?.close||[]).length;i++){
+    if(q.close[i]!=null){
+      closes.push(q.close[i]);
+      vols.push(q.volume?.[i]||0);
+      highs.push(q.high?.[i]||q.close[i]);
+      lows.push(q.low?.[i]||q.close[i]);
+      opens.push(q.open?.[i]||q.close[i]);
     }
   }
-};
+  if(closes.length<10) throw new Error('Yahoo: data tidak cukup');
 
-function initCharts() {
-  // Chart Observasi
-  new Chart(document.getElementById('obsChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Sangat Baik (21-23)', 'Baik (18-20)', 'Cukup (15-17)', 'Kurang (11-14)'],
-      datasets: [
-        { 
-          label: 'Eksperimen', 
-          data: [27.27, 36.36, 31.82, 4.55], 
-          backgroundColor: chartColors.eksperimen,
-          borderColor: chartColors.eksperimenBorder,
-          borderWidth: 2
-        },
-        { 
-          label: 'Kontrol', 
-          data: [31.82, 27.27, 9.09, 31.82], 
-          backgroundColor: chartColors.kontrol,
-          borderColor: chartColors.kontrolBorder,
-          borderWidth: 2
-        }
-      ]
-    },
-    options: {
-      ...commonChartOptions,
-      scales: { ...commonChartOptions.scales, y: { ...commonChartOptions.scales.y, max: 40 } },
-      plugins: {
-        ...commonChartOptions.plugins,
-        title: { display: true, text: 'Distribusi Skor Observasi Aktivitas Siswa (%)', color: '#64b5f6', font: { size: 16 } }
-      }
-    }
-  });
-
-  // Chart Pretest
-  new Chart(document.getElementById('pretestChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Rata-rata', 'Maksimal', 'Minimal', 'Std. Deviasi'],
-      datasets: [
-        { 
-          label: 'Eksperimen', 
-          data: [37.12, 50.00, 25.00, 6.67], 
-          backgroundColor: chartColors.eksperimen,
-          borderColor: chartColors.eksperimenBorder,
-          borderWidth: 2
-        },
-        { 
-          label: 'Kontrol', 
-          data: [39.20, 58.33, 20.83, 9.85], 
-          backgroundColor: chartColors.kontrol,
-          borderColor: chartColors.kontrolBorder,
-          borderWidth: 2
-        }
-      ]
-    },
-    options: {
-      ...commonChartOptions,
-      scales: { ...commonChartOptions.scales, y: { ...commonChartOptions.scales.y, max: 70 } },
-      plugins: {
-        ...commonChartOptions.plugins,
-        title: { display: true, text: 'Perbandingan Statistik Nilai Pretest', color: '#64b5f6', font: { size: 16 } }
-      }
-    }
-  });
-
-  // Chart Kategori Pretest
-  new Chart(document.getElementById('pretestKategoriChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Sangat Baik (90-100)', 'Baik (80-89)', 'Cukup (70-79)', 'Kurang (<70)'],
-      datasets: [
-        { 
-          label: 'Eksperimen', 
-          data: [0, 0, 0, 100], 
-          backgroundColor: chartColors.eksperimen,
-          borderColor: chartColors.eksperimenBorder,
-          borderWidth: 2
-        },
-        { 
-          label: 'Kontrol', 
-          data: [0, 0, 0, 100], 
-          backgroundColor: chartColors.kontrol,
-          borderColor: chartColors.kontrolBorder,
-          borderWidth: 2
-        }
-      ]
-    },
-    options: {
-      ...commonChartOptions,
-      scales: { ...commonChartOptions.scales, y: { ...commonChartOptions.scales.y, max: 110 } },
-      plugins: {
-        ...commonChartOptions.plugins,
-        title: { display: true, text: 'Distribusi Kategori Nilai Pretest (%)', color: '#ff9800', font: { size: 16 } }
-      }
-    }
-  });
-
-  // Chart Posttest
-  new Chart(document.getElementById('posttestChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Rata-rata', 'Maksimal', 'Minimal', 'Std. Deviasi'],
-      datasets: [
-        { 
-          label: 'Eksperimen', 
-          data: [83.14, 95.83, 66.67, 6.86], 
-          backgroundColor: chartColors.eksperimen,
-          borderColor: chartColors.eksperimenBorder,
-          borderWidth: 2
-        },
-        { 
-          label: 'Kontrol', 
-          data: [76.70, 91.67, 62.50, 8.10], 
-          backgroundColor: chartColors.kontrol,
-          borderColor: chartColors.kontrolBorder,
-          borderWidth: 2
-        }
-      ]
-    },
-    options: {
-      ...commonChartOptions,
-      scales: { ...commonChartOptions.scales, y: { ...commonChartOptions.scales.y, max: 110 } },
-      plugins: {
-        ...commonChartOptions.plugins,
-        title: { display: true, text: 'Perbandingan Statistik Nilai Posttest', color: '#64b5f6', font: { size: 16 } }
-      }
-    }
-  });
-
-  // Chart Kategori Posttest
-  new Chart(document.getElementById('posttestKategoriChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Sangat Baik (90-100)', 'Baik (80-89)', 'Cukup (70-79)', 'Kurang (<70)'],
-      datasets: [
-        { 
-          label: 'Eksperimen', 
-          data: [18.18, 50.00, 27.27, 4.55], 
-          backgroundColor: chartColors.eksperimen,
-          borderColor: chartColors.eksperimenBorder,
-          borderWidth: 2
-        },
-        { 
-          label: 'Kontrol', 
-          data: [9.09, 22.73, 54.55, 13.64], 
-          backgroundColor: chartColors.kontrol,
-          borderColor: chartColors.kontrolBorder,
-          borderWidth: 2
-        }
-      ]
-    },
-    options: {
-      ...commonChartOptions,
-      scales: { ...commonChartOptions.scales, y: { ...commonChartOptions.scales.y, max: 60 } },
-      plugins: {
-        ...commonChartOptions.plugins,
-        title: { display: true, text: 'Distribusi Kategori Nilai Posttest (%)', color: '#64b5f6', font: { size: 16 } }
-      }
-    }
-  });
-
-  // Chart N-Gain
-  new Chart(document.getElementById('ngainChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Rata-rata N-Gain', 'Maksimal', 'Minimal', 'Std. Deviasi'],
-      datasets: [
-        { 
-          label: 'Eksperimen', 
-          data: [0.74, 0.92, 0.50, 0.10], 
-          backgroundColor: chartColors.eksperimen,
-          borderColor: chartColors.eksperimenBorder,
-          borderWidth: 2
-        },
-        { 
-          label: 'Kontrol', 
-          data: [0.61, 0.88, 0.43, 0.13], 
-          backgroundColor: chartColors.kontrol,
-          borderColor: chartColors.kontrolBorder,
-          borderWidth: 2
-        }
-      ]
-    },
-    options: {
-      ...commonChartOptions,
-      scales: { ...commonChartOptions.scales, y: { ...commonChartOptions.scales.y, max: 1.0 } },
-      plugins: {
-        ...commonChartOptions.plugins,
-        title: { display: true, text: 'Perbandingan Nilai N-Gain', color: '#64b5f6', font: { size: 16 } }
-      }
-    }
-  });
-
-  // Chart Kategori N-Gain
-  new Chart(document.getElementById('ngainKategoriChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Tinggi (≥0,7)', 'Sedang (0,3-0,7)', 'Rendah (<0,3)'],
-      datasets: [
-        { 
-          label: 'Eksperimen', 
-          data: [68.18, 31.82, 0], 
-          backgroundColor: chartColors.eksperimen,
-          borderColor: chartColors.eksperimenBorder,
-          borderWidth: 2
-        },
-        { 
-          label: 'Kontrol', 
-          data: [31.82, 68.18, 0], 
-          backgroundColor: chartColors.kontrol,
-          borderColor: chartColors.kontrolBorder,
-          borderWidth: 2
-        }
-      ]
-    },
-    options: {
-      ...commonChartOptions,
-      scales: { ...commonChartOptions.scales, y: { ...commonChartOptions.scales.y, max: 80 } },
-      plugins: {
-        ...commonChartOptions.plugins,
-        title: { display: true, text: 'Distribusi Kategori N-Gain (%)', color: '#64b5f6', font: { size: 16 } }
-      }
-    }
-  });
-
-  // Chart Progres
-  new Chart(document.getElementById('progresChart'), {
-    type: 'line',
-    data: {
-      labels: ['Pretest', 'Posttest', 'N-Gain (×100)'],
-      datasets: [
-        { 
-          label: 'Eksperimen', 
-          data: [37.12, 83.14, 74], 
-          backgroundColor: 'rgba(76, 175, 80, 0.3)',
-          borderColor: chartColors.eksperimenBorder,
-          borderWidth: 3,
-          fill: true,
-          tension: 0.4
-        },
-        { 
-          label: 'Kontrol', 
-          data: [39.20, 76.70, 61], 
-          backgroundColor: 'rgba(33, 150, 243, 0.3)',
-          borderColor: chartColors.kontrolBorder,
-          borderWidth: 3,
-          fill: true,
-          tension: 0.4
-        }
-      ]
-    },
-    options: {
-      ...commonChartOptions,
-      scales: { ...commonChartOptions.scales, y: { ...commonChartOptions.scales.y, max: 100 } },
-      plugins: {
-        ...commonChartOptions.plugins,
-        title: { display: true, text: 'Progres Pembelajaran: Pretest → Posttest → N-Gain', color: '#64b5f6', font: { size: 16 } }
-      }
-    }
-  });
-
-  // Chart Hipotesis
-  new Chart(document.getElementById('hipotesisChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Rata-rata Posttest', 't-hitung', 'Signifikansi'],
-      datasets: [
-        { 
-          label: 'Eksperimen', 
-          data: [83.14, 2.846, 0.007], 
-          backgroundColor: chartColors.eksperimen,
-          borderColor: chartColors.eksperimenBorder,
-          borderWidth: 2
-        },
-        { 
-          label: 'Kontrol', 
-          data: [76.70, 0, 0], 
-          backgroundColor: chartColors.kontrol,
-          borderColor: chartColors.kontrolBorder,
-          borderWidth: 2
-        }
-      ]
-    },
-    options: {
-      ...commonChartOptions,
-      scales: { ...commonChartOptions.scales, y: { ...commonChartOptions.scales.y, max: 100 } },
-      plugins: {
-        ...commonChartOptions.plugins,
-        title: { display: true, text: 'Hasil Uji Independent Sample t-Test', color: '#4caf50', font: { size: 16 } }
-      }
-    }
-  });
+  const price=meta.regularMarketPrice||closes[closes.length-1];
+  const prev=meta.chartPreviousClose||meta.previousClose||closes[closes.length-2]||price;
+  return {
+    source:'Yahoo',
+    price, prev,
+    change: price-prev,
+    changePct: ((price-prev)/prev)*100,
+    volLot: Math.round((meta.regularMarketVolume||vols[vols.length-1]||0)/100),
+    closes, vols, highs, lows, opens,
+    name: meta.longName||meta.shortName||ticker,
+    currency: meta.currency||'IDR',
+    dayHigh: meta.regularMarketDayHigh||Math.max(...highs.slice(-1)),
+    dayLow:  meta.regularMarketDayLow ||Math.min(...lows.slice(-1)),
+    week52H: meta.fiftyTwoWeekHigh||Math.max(...highs),
+    week52L: meta.fiftyTwoWeekLow ||Math.min(...lows),
+  };
 }
 
-window.onload = () => {
-  show(0);
-  initCharts();
-};
-</script>
+// ══════════════════════════════════════════════
+// SOURCE 2: STOOQ — Cross-check harga
+// ══════════════════════════════════════════════
+async function fetchStooq(ticker){
+  try{
+    const url=`https://stooq.com/q/d/l/?s=${ticker.toLowerCase()}.jk&i=d`;
+    const txt=await proxyFetch(url);
+    const lines=txt.trim().split('\n').filter(l=>l&&!l.startsWith('Date'));
+    if(!lines.length) return null;
+    const last=lines[lines.length-1].split(',');
+    const price=parseFloat(last[4]);
+    if(isNaN(price)) return null;
 
+    const closes=lines.slice(-90).map(l=>{
+      const p=parseFloat(l.split(',')[4]);
+      return isNaN(p)?null:p;
+    }).filter(Boolean);
+
+    return {source:'Stooq', price, closes};
+  } catch(e){ return null; }
+}
+
+// ══════════════════════════════════════════════
+// FUSI DATA multi-source → pilih paling akurat
+// ══════════════════════════════════════════════
+async function fetchMultiSource(ticker){
+  const [yahoo, stooq] = await Promise.allSettled([
+    fetchYahoo(ticker),
+    fetchStooq(ticker)
+  ]);
+
+  const y = yahoo.status==='fulfilled' ? yahoo.value : null;
+  const s = stooq.status==='fulfilled' ? stooq.value : null;
+
+  if(!y&&!s) throw new Error('Semua sumber gagal');
+
+  let data = y || {price:s.price,closes:s.closes,change:0,changePct:0,volLot:0,name:ticker};
+
+  // Cross-validate harga
+  let crossValid = 'Single Source';
+  let confidence = 60;
+  if(y&&s){
+    const diff=Math.abs(y.price-s.price)/y.price*100;
+    if(diff<5){
+      crossValid='✓ Yahoo+Stooq Match';
+      confidence=90;
+    } else {
+      crossValid=`⚠ Diff ${diff.toFixed(1)}%`;
+      confidence=70;
+    }
+    // Extend history with Stooq if Yahoo has less data
+    if(s.closes.length > y.closes.length){
+      data.closes=[...s.closes.slice(0, s.closes.length-y.closes.length), ...y.closes];
+    }
+  } else if(y) { crossValid='Yahoo Only'; confidence=75; }
+  else { data={price:s.price,closes:s.closes,change:0,changePct:0,volLot:0,name:ticker}; crossValid='Stooq Only'; confidence=65; }
+
+  data.crossValid=crossValid;
+  data.confidence=confidence;
+  data.sources=(y?'Yahoo ':'')+(s?'Stooq':'');
+  return data;
+}
+
+// ══════════════════════════════════════════════
+// TECHNICAL ANALYSIS ENGINE
+// ══════════════════════════════════════════════
+function sma(arr,n){ if(arr.length<n)return null; const s=arr.slice(-n); return s.reduce((a,b)=>a+b,0)/n; }
+function ema(arr,n){
+  if(arr.length<n)return null;
+  const k=2/(n+1);
+  let e=arr.slice(0,n).reduce((a,b)=>a+b,0)/n;
+  for(let i=n;i<arr.length;i++) e=arr[i]*k+e*(1-k);
+  return e;
+}
+function rsi(arr,n=14){
+  if(arr.length<n+1)return 50;
+  let g=0,l=0;
+  for(let i=arr.length-n;i<arr.length;i++){
+    const d=arr[i]-arr[i-1];
+    if(d>0)g+=d; else l+=Math.abs(d);
+  }
+  const rs=(g/n)/((l/n)||0.0001);
+  return 100-(100/(1+rs));
+}
+function macd(arr){
+  const e12=ema(arr,12), e26=ema(arr,26);
+  if(!e12||!e26) return {macd:0,signal:0,hist:0};
+  const m=e12-e26;
+  // Simple signal approximation
+  const e12s=ema(arr.slice(0,-3),12)||e12;
+  const e26s=ema(arr.slice(0,-3),26)||e26;
+  const sig=(e12s-e26s)*0.85+m*0.15;
+  return {macd:m,signal:sig,hist:m-sig};
+}
+function boll(arr,n=20){
+  if(arr.length<n)return{upper:0,mid:0,lower:0,bw:0,pct:0};
+  const sl=arr.slice(-n);
+  const m=sl.reduce((a,b)=>a+b,0)/n;
+  const std=Math.sqrt(sl.map(v=>(v-m)**2).reduce((a,b)=>a+b,0)/n);
+  const up=m+2*std, lo=m-2*std;
+  const cur=arr[arr.length-1];
+  return {upper:up,mid:m,lower:lo,bw:(up-lo)/m*100,pct:(cur-lo)/(up-lo||1)*100};
+}
+function stoch(arr,n=14){
+  if(arr.length<n) return 50;
+  const sl=arr.slice(-n);
+  const lo=Math.min(...sl),hi=Math.max(...sl);
+  return hi===lo?50:(arr[arr.length-1]-lo)/(hi-lo)*100;
+}
+function atr(highs,lows,closes,n=14){
+  if(!highs||highs.length<n) return 0;
+  let trs=[];
+  for(let i=1;i<closes.length;i++){
+    const hl=highs[i]-lows[i];
+    const hc=Math.abs(highs[i]-closes[i-1]);
+    const lc=Math.abs(lows[i]-closes[i-1]);
+    trs.push(Math.max(hl,hc,lc));
+  }
+  return trs.slice(-n).reduce((a,b)=>a+b,0)/n;
+}
+function avgVol(vols,n=10){
+  if(!vols||vols.length<n) return 0;
+  return vols.slice(-n).reduce((a,b)=>a+b,0)/n;
+}
+
+// ══════════════════════════════════════════════
+// PROFIT SCORE ENGINE
+// ══════════════════════════════════════════════
+function calcProfitScore(price,closes,vols,highs,lows,changePct){
+  const ma5=sma(closes,5), ma10=sma(closes,10), ma20=sma(closes,20), ma50=sma(closes,50);
+  const ema12=ema(closes,12), ema26=ema(closes,26);
+  const r=rsi(closes), mc=macd(closes), bb=boll(closes), st=stoch(closes);
+  const av=avgVol(vols,10);
+  const curVol=vols[vols.length-1]||0;
+  const volRatio=av>0?curVol/av:1;
+  const atrVal=atr(highs||[],lows||[],closes);
+
+  let score=50;
+  const signals=[];
+
+  // ─── TREND SCORING ───
+  let trend='side';
+  if(ma5&&ma20&&ma50){
+    if(price>ma5&&ma5>ma20){
+      score+=12; signals.push({t:'MA5>MA20 Bullish',c:'bull'});
+      if(ma20>ma50){ score+=8; signals.push({t:'MA20>MA50',c:'bull'}); trend='up';}
+    } else if(price<ma5&&ma5<ma20){ score-=10; trend='down'; signals.push({t:'MA Bearish',c:'bear'}); }
+    if(ma5&&ma10&&ma5>ma10&&price>ma5) { score+=6; signals.push({t:'Short-Term Bullish',c:'bull'}); }
+  }
+  if(ma20&&price>ma20){ score+=7; if(trend!=='up') trend='up'; }
+  else if(ma20&&price<ma20){ score-=7; if(trend!=='down') trend='down'; }
+
+  // ─── RSI SCORING ───
+  if(r>=40&&r<=60){ score+=8; signals.push({t:`RSI Ideal ${r.toFixed(0)}`,c:'bull'}); }
+  else if(r<30){ score+=12; signals.push({t:`RSI Oversold ${r.toFixed(0)}`,c:'bull'}); }
+  else if(r<40){ score+=5; signals.push({t:`RSI Mendekati Beli ${r.toFixed(0)}`,c:'neu'}); }
+  else if(r>70){ score-=12; signals.push({t:`RSI Overbought ${r.toFixed(0)}`,c:'bear'}); }
+  else if(r>65){ score-=5; signals.push({t:`RSI Tinggi ${r.toFixed(0)}`,c:'neu'}); }
+
+  // ─── MACD SCORING ───
+  if(mc.hist>0&&mc.macd>0){ score+=10; signals.push({t:'MACD Bullish Cross',c:'bull'}); }
+  else if(mc.hist>0&&mc.macd<0){ score+=5; signals.push({t:'MACD Diverge Up',c:'neu'}); }
+  else if(mc.hist<0){ score-=8; signals.push({t:'MACD Bearish',c:'bear'}); }
+
+  // ─── BOLLINGER SCORING ───
+  if(bb.pct<20){ score+=10; signals.push({t:'Di Bawah BB Lower',c:'bull'}); }
+  else if(bb.pct<35){ score+=6; signals.push({t:'BB Zone Beli',c:'bull'}); }
+  else if(bb.pct>80){ score-=8; signals.push({t:'BB Overbought Zone',c:'bear'}); }
+
+  // ─── STOCHASTIC SCORING ───
+  if(st<20){ score+=9; signals.push({t:`Stoch Oversold ${st.toFixed(0)}`,c:'bull'}); }
+  else if(st<30){ score+=5; signals.push({t:`Stoch Murah ${st.toFixed(0)}`,c:'bull'}); }
+  else if(st>80){ score-=8; signals.push({t:`Stoch Overbought ${st.toFixed(0)}`,c:'bear'}); }
+
+  // ─── VOLUME SCORING ───
+  if(volRatio>2&&changePct>0){ score+=12; signals.push({t:`Vol Surge ${volRatio.toFixed(1)}x ▲`,c:'bull'}); }
+  else if(volRatio>1.5&&changePct>0){ score+=8; signals.push({t:`Vol Tinggi ${volRatio.toFixed(1)}x`,c:'bull'}); }
+  else if(volRatio>2&&changePct<0){ score-=8; signals.push({t:`Vol Dump ${volRatio.toFixed(1)}x ▼`,c:'bear'}); }
+  else if(volRatio<0.5){ score-=4; signals.push({t:'Vol Sepi',c:'neu'}); }
+
+  // ─── PRICE ACTION SCORING ───
+  if(changePct>3){ score+=8; signals.push({t:`Breakout +${changePct.toFixed(1)}%`,c:'bull'}); }
+  else if(changePct>1){ score+=4; signals.push({t:`Naik ${changePct.toFixed(1)}%`,c:'bull'}); }
+  else if(changePct<-3){ score-=8; signals.push({t:`Breakdown ${changePct.toFixed(1)}%`,c:'bear'}); }
+
+  // ─── SUPPORT/RESISTANCE ───
+  const recent=closes.slice(-20);
+  const support=Math.min(...recent);
+  const resistance=Math.max(...recent);
+  const distToRes=(resistance-price)/price*100;
+  const distToSup=(price-support)/price*100;
+  if(distToSup<3){ score+=8; signals.push({t:'Dekat Support',c:'bull'}); }
+  if(distToRes>10){ score+=6; signals.push({t:`Ruang Naik ${distToRes.toFixed(0)}%`,c:'bull'}); }
+
+  // ─── TARGET PRICE ───
+  const targetPct = Math.max(5, Math.min(40,
+    (distToRes * 0.6) + (r<40?10:0) + (mc.hist>0?5:0) + (volRatio>1.5?5:0)
+  ));
+  const targetPrice = price * (1 + targetPct/100);
+  const stopLoss = price * (1 - Math.max(3, distToSup*0.5)/100);
+
+  score = Math.max(0, Math.min(100, Math.round(score)));
+
+  // ─── PROFIT TIER ───
+  let tier='C', tierNote='';
+  if(score>=78&&trend==='up'){ tier='S'; tierNote='⭐ PRIME PICK'; }
+  else if(score>=65&&trend==='up'){ tier='A'; tierNote='High Potential'; }
+  else if(score>=50){ tier='B'; tierNote='Monitor'; }
+  else { tier='C'; tierNote='Low Priority'; }
+
+  // ─── RECOMMENDATION ───
+  let rec,recCode;
+  if(score>=75&&trend==='up'){ rec='STRONG BUY'; recCode='sb'; }
+  else if(score>=60&&trend!=='down'){ rec='BUY'; recCode='b'; }
+  else if(score>=40){ rec='HOLD'; recCode='h'; }
+  else if(score>=25){ rec='SELL'; recCode='s'; }
+  else{ rec='STRONG SELL'; recCode='ss'; }
+
+  return {
+    ma5:ma5?.toFixed(0)||'-', ma10:ma10?.toFixed(0)||'-',
+    ma20:ma20?.toFixed(0)||'-', ma50:ma50?.toFixed(0)||'-',
+    rsi:r.toFixed(1), macd:mc.hist.toFixed(2), macdLine:mc.macd.toFixed(2),
+    bb, stoch:st.toFixed(1), volRatio:volRatio.toFixed(2),
+    atr:atrVal.toFixed(2), trend,
+    score, tier, tierNote, signals:signals.slice(0,6),
+    rec, recCode,
+    support:support.toFixed(0), resistance:resistance.toFixed(0),
+    targetPrice:targetPrice.toFixed(0), targetPct:targetPct.toFixed(1),
+    stopLoss:stopLoss.toFixed(0),
+    distToRes:distToRes.toFixed(1)
+  };
+}
+
+// ══════════════════════════════════════════════
+// MAIN SCAN
+// ══════════════════════════════════════════════
+async function runScan(){
+  if(scanning) return;
+  scanning=true;
+
+  const btn=document.getElementById('scan-btn');
+  const progEl=document.getElementById('prog');
+  const pfEl=document.getElementById('pf');
+  const pdEl=document.getElementById('pd');
+  const ptEl=document.getElementById('pt');
+  const ppEl=document.getElementById('pp');
+  const plogEl=document.getElementById('plog');
+  const sumEl=document.getElementById('sum');
+  const tbEl=document.getElementById('tb');
+  const resEl=document.getElementById('results');
+
+  btn.disabled=true;
+  progEl.className='prog show';
+  sumEl.className='sum';
+  tbEl.className='tb';
+  resEl.innerHTML='';
+  allData=[];
+  plogEl.innerHTML='';
+
+  const customRaw=document.getElementById('f-custom').value.trim();
+  const watchlist=customRaw
+    ? customRaw.split(',').map(s=>s.trim().toUpperCase()).filter(Boolean)
+    : curWatchlist;
+
+  const maxPrice=parseFloat(document.getElementById('f-price').value)||100;
+  const minPrice=parseFloat(document.getElementById('f-price-min').value)||1;
+  const minVol=parseInt(document.getElementById('f-vol').value)||0;
+  const minRsi=parseFloat(document.getElementById('f-rsi-min').value)||0;
+  const maxRsi=parseFloat(document.getElementById('f-rsi-max').value)||100;
+  const minScore=parseFloat(document.getElementById('f-score').value)||0;
+  const trendF=document.getElementById('f-trend').value;
+  const recF=document.getElementById('f-rec').value;
+
+  ptEl.textContent=watchlist.length;
+
+  function log(msg,cls=''){
+    const d=document.createElement('div');
+    d.className='lg'+(cls?' '+cls:'');
+    d.textContent=msg;
+    plogEl.appendChild(d);
+    plogEl.scrollTop=plogEl.scrollHeight;
+    // Keep only last 8 lines
+    while(plogEl.children.length>8) plogEl.removeChild(plogEl.firstChild);
+  }
+
+  log(`🔍 Scanning ${watchlist.length} saham — Multi-Source: Yahoo Finance + Stooq`,'in');
+  log(`📊 Filter: Harga Rp${minPrice}-${maxPrice} | RSI ${minRsi}-${maxRsi} | Min Score: ${minScore}`,'in');
+
+  let done=0;
+  const BATCH=3; // parallel requests
+
+  for(let i=0;i<watchlist.length;i+=BATCH){
+    const batch=watchlist.slice(i,i+BATCH);
+
+    await Promise.all(batch.map(async ticker=>{
+      try{
+        log(`⏳ Fetching ${ticker}.JK ...`);
+        const raw=await fetchMultiSource(ticker);
+        const ta=calcProfitScore(
+          raw.price, raw.closes, raw.vols||[],
+          raw.highs||null, raw.lows||null, raw.changePct||0
+        );
+
+        // ─ Apply Filters ─
+        if(raw.price<minPrice||raw.price>maxPrice){
+          log(`⊘ ${ticker}: Harga Rp${raw.price.toFixed(0)} diluar range`,'sk'); return;
+        }
+        if(raw.volLot<minVol){
+          log(`⊘ ${ticker}: Vol ${raw.volLot} lot < min ${minVol}`,'sk'); return;
+        }
+        const rsiNum=parseFloat(ta.rsi);
+        if(rsiNum<minRsi||rsiNum>maxRsi){
+          log(`⊘ ${ticker}: RSI ${ta.rsi} diluar range`,'sk'); return;
+        }
+        if(ta.score<minScore){
+          log(`⊘ ${ticker}: Score ${ta.score} < min ${minScore}`,'sk'); return;
+        }
+        if(trendF!=='all'&&ta.trend!==trendF){
+          log(`⊘ ${ticker}: Trend ${ta.trend} ≠ ${trendF}`,'sk'); return;
+        }
+        if(recF==='buy'&&!['sb','b'].includes(ta.recCode)){ return; }
+        if(recF==='hold'&&ta.recCode!=='h'){ return; }
+
+        const result={
+          ticker, name:raw.name, sector:SECTOR_MAP[ticker]||'Lainnya',
+          price:raw.price, change:raw.change||0, changePct:raw.changePct||0,
+          volLot:raw.volLot||0, dayHigh:raw.dayHigh||raw.price, dayLow:raw.dayLow||raw.price,
+          week52H:raw.week52H||raw.price, week52L:raw.week52L||raw.price,
+          crossValid:raw.crossValid||'—', confidence:raw.confidence||60,
+          sources:raw.sources||'—',
+          ...ta
+        };
+
+        allData.push(result);
+        log(`✓ ${ticker}: Rp${raw.price.toFixed(0)} | ${ta.trend.toUpperCase()} | Score:${ta.score} | RSI:${ta.rsi} | Tier:${ta.tier}`,'ok');
+
+      } catch(e){
+        log(`✗ ${ticker}: ${e.message}`,'er');
+      }
+    }));
+
+    done+=batch.length;
+    pdEl.textContent=Math.min(done,watchlist.length);
+    const pct=Math.round(done/watchlist.length*100);
+    ppEl.textContent=pct;
+    pfEl.style.width=pct+'%';
+  }
+
+  // Sort by profit score desc
+  allData.sort((a,b)=>b.score-a.score);
+  renderAll(allData);
+  renderSum(allData);
+  sumEl.className='sum show';
+  tbEl.className='tb show';
+
+  const found=allData.length;
+  const tierSA=allData.filter(s=>['S','A'].includes(s.tier)).length;
+  log(`✅ Selesai! ${found} saham lulus filter. Tier S/A: ${tierSA} saham.`,'in');
+
+  btn.disabled=false;
+  scanning=false;
+}
+
+// ══════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════
+function renderAll(arr){
+  const el=document.getElementById('results');
+  el.innerHTML='';
+  if(!arr.length){
+    el.innerHTML='<div class="empty">Tidak ada saham yang memenuhi filter.<br>Coba kurangi Min Score atau longgarkan filter RSI/Trend.</div>';
+    return;
+  }
+  arr.forEach((s,i)=>el.appendChild(buildCard(s,i+1)));
+}
+
+function buildCard(s,rank){
+  const tCls=s.trend==='up'?'up':s.trend==='down'?'down':'side';
+  const chgCls=s.changePct>=0?'pos':'neg';
+  const chgSign=s.changePct>=0?'+':'';
+  const sCls=s.score>=65?'h':s.score>=40?'m':'l';
+  const rsiNum=parseFloat(s.rsi);
+  const rsiColor=rsiNum>70?'var(--red)':rsiNum<30?'var(--green)':'var(--accent)';
+  const confColor=s.confidence>=85?'var(--green)':s.confidence>=70?'var(--gold)':'var(--red)';
+  const scoreColor=s.score>=65?'var(--green)':s.score>=40?'var(--gold)':'var(--red)';
+
+  const sigHTML=(s.signals||[]).map(sg=>`<span class="sig ${sg.c}">${sg.t}</span>`).join('');
+
+  const card=document.createElement('div');
+  card.className=`card ${tCls} tier-${s.tier.toLowerCase()}`;
+  card.style.animationDelay=`${(rank-1)*0.04}s`;
+  card.dataset.ticker=s.ticker;
+  card.dataset.score=s.score;
+  card.dataset.price=s.price;
+  card.dataset.change=s.changePct;
+  card.dataset.rsi=rsiNum;
+  card.dataset.vol=s.volLot;
+  card.dataset.target=parseFloat(s.targetPct);
+  card.dataset.trend=s.trend;
+
+  card.innerHTML=`
+    <span class="tier-flag ${s.tier}">${s.tier} ${s.tierNote}</span>
+
+    <div class="c-rank"><span>${rank}</span>#</div>
+
+    <div class="c-info">
+      <div class="ticker">${s.ticker}.JK</div>
+      <div class="name">${s.name||s.ticker}</div>
+      <span class="sector">${s.sector}</span>
+      <br>
+      <a class="stockbit-link" href="https://stockbit.com/#/symbol/${s.ticker}" target="_blank" rel="noopener">
+        📈 Buka Stockbit
+      </a>
+    </div>
+
+    <div class="c-ind">
+      <div class="sigs">${sigHTML||'<span class="sig info">Analyzing...</span>'}</div>
+      <div class="ta-grid">
+        <div class="ta-item"><span class="ta-v">${s.ma5}</span><span class="ta-l">MA5</span></div>
+        <div class="ta-item"><span class="ta-v">${s.ma10}</span><span class="ta-l">MA10</span></div>
+        <div class="ta-item"><span class="ta-v">${s.ma20}</span><span class="ta-l">MA20</span></div>
+        <div class="ta-item"><span class="ta-v">${s.ma50}</span><span class="ta-l">MA50</span></div>
+        <div class="ta-item"><span class="ta-v" style="color:${rsiColor}">${s.rsi}</span><span class="ta-l">RSI</span></div>
+        <div class="ta-item"><span class="ta-v">${s.stoch}</span><span class="ta-l">Stoch</span></div>
+        <div class="ta-item"><span class="ta-v">${s.macd}</span><span class="ta-l">MACD</span></div>
+        <div class="ta-item"><span class="ta-v">${s.volRatio}x</span><span class="ta-l">Vol/Avg</span></div>
+      </div>
+      <div class="score-wrap">
+        <span class="score-n" style="color:${scoreColor}">${s.score}</span>
+        <div class="score-bar"><div class="score-fill-bar ${sCls}" style="width:${s.score}%"></div></div>
+        <span class="score-sub">S:${s.support} R:${s.resistance} | BB:${s.bb?.pct?.toFixed(0)||'?'}%</span>
+      </div>
+      <div class="confidence">
+        <span class="conf-dot" style="background:${confColor}"></span>
+        Data: ${s.sources} | Validasi: ${s.crossValid} | Confidence: ${s.confidence}%
+      </div>
+    </div>
+
+    <div class="c-price">
+      <div class="price-big">Rp ${s.price<10?s.price.toFixed(2):s.price.toFixed(0)}</div>
+      <div class="price-chg ${chgCls}">${chgSign}${s.changePct.toFixed(2)}%</div>
+      <div class="price-meta">
+        H: ${s.dayHigh?.toFixed(0)||'?'} / L: ${s.dayLow?.toFixed(0)||'?'}<br>
+        52W H: ${s.week52H?.toFixed(0)||'?'}<br>
+        Vol: ${(s.volLot||0).toLocaleString('id')} lot<br>
+        ATR: ${s.atr}
+      </div>
+      <div class="target-price">
+        🎯 Target: Rp${s.targetPrice}<br>
+        +${s.targetPct}% | SL: Rp${s.stopLoss}
+      </div>
+    </div>
+
+    <div class="c-act">
+      <span class="rec ${s.recCode}">${s.rec}</span>
+      <div class="rsi-mini">RSI ${s.rsi}</div>
+      <div class="rsi-mini-bar">
+        <div class="rsi-mini-fill" style="width:${rsiNum}%;background:${rsiColor};"></div>
+      </div>
+      <div style="font-size:8px;color:var(--text2);margin-top:5px;">${s.trend.toUpperCase()}</div>
+      <div style="font-size:8px;color:var(--text2);margin-top:3px;">Ruang: +${s.distToRes}%</div>
+    </div>
+  `;
+  return card;
+}
+
+function renderSum(arr){
+  document.getElementById('s0').textContent=arr.length;
+  document.getElementById('s1').textContent=arr.filter(s=>s.trend==='up').length;
+  document.getElementById('s2').textContent=arr.filter(s=>s.trend==='down').length;
+  document.getElementById('s3').textContent=arr.filter(s=>['sb','b'].includes(s.recCode)).length;
+  document.getElementById('s4').textContent=arr.filter(s=>['S','A'].includes(s.tier)).length;
+  const avg=arr.length?Math.round(arr.reduce((a,b)=>a+b.score,0)/arr.length):0;
+  document.getElementById('s5').textContent=avg;
+  const avgT=arr.length?(arr.reduce((a,b)=>a+parseFloat(b.targetPct||0),0)/arr.length).toFixed(1):0;
+  document.getElementById('s6').textContent='+'+avgT+'%';
+}
+
+// ══════════════════════════════════════════════
+// SORT & SEARCH
+// ══════════════════════════════════════════════
+function doSort(by,btn){
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const sorted=[...allData].sort((a,b)=>{
+    if(by==='score') return b.score-a.score;
+    if(by==='target') return parseFloat(b.targetPct)-parseFloat(a.targetPct);
+    if(by==='price') return a.price-b.price;
+    if(by==='change') return b.changePct-a.changePct;
+    if(by==='rsi') return parseFloat(a.rsi)-parseFloat(b.rsi);
+    if(by==='vol') return b.volLot-a.volLot;
+    return 0;
+  });
+  renderAll(sorted);
+}
+
+function doSearch(q){
+  document.querySelectorAll('.card').forEach(c=>{
+    c.style.display=(c.dataset.ticker||'').toLowerCase().includes(q.toLowerCase())?'grid':'none';
+  });
+}
+</script>
 </body>
 </html>
